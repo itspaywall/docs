@@ -10,11 +10,16 @@ import { grey } from "@material-ui/core/colors";
 import DownIcon from "@material-ui/icons/KeyboardArrowDown";
 import ReactMarkdown from "react-markdown";
 
-import sections from "./content.json";
+import pages from "./content.json";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: 80,
+    },
+    pageTitle: {
+        marginBottom: 8,
+        fontWeight: 600,
+        fontSize: 32,
     },
     snippets: {
         padding: 8,
@@ -140,6 +145,44 @@ function Pricing(props) {
         setLanguageAnchor(null);
     };
 
+    useEffect(() => {
+        document.title = "API Reference | Hubble Subscriptions";
+    }, []);
+
+    const renderPageStart = (page) => (
+        <Grid container={true} className={classes.page} spacing={3}>
+            <Grid item={true} xs={12} lg={6}>
+                <Typography variant="h2" className={classes.pageTitle}>
+                    {page.title}
+                </Typography>
+                <ReactMarkdown
+                    className={classes.markdown}
+                    escapeHtml={true}
+                    source={page.description}
+                />
+            </Grid>
+            {page.snippetContent && (
+                <Grid item={true} xs={12} lg={6} className={classes.snippets}>
+                    <div className={classes.snippetHeader}>
+                        <Typography
+                            variant="h5"
+                            className={classes.snippetTitle}
+                        >
+                            {page.snippetTitle}
+                        </Typography>
+                        <Button size="small" className={classes.copy}>
+                            Copy
+                        </Button>
+                    </div>
+                    <ReactMarkdown
+                        source={page.snippetContent}
+                        className={classes.snippetContent}
+                    />
+                </Grid>
+            )}
+        </Grid>
+    );
+
     const renderSnippet = (section) => {
         let snippet;
         if (section.generalSnippet) {
@@ -158,107 +201,119 @@ function Pricing(props) {
         );
     };
 
-    useEffect(() => {
-        document.title = "API Reference | Hubble Subscriptions";
-    }, []);
-
     return (
         <Container className={classes.root}>
-            {sections.map((section) => (
-                <Grid container={true} className={classes.section} spacing={3}>
-                    <Grid item={true} xs={12} lg={6}>
-                        <Typography
-                            variant="h5"
-                            className={classes.sectionTitle}
-                        >
-                            {section.title}
-                        </Typography>
-                        <ReactMarkdown
-                            className={classes.markdown}
-                            escapeHtml={true}
-                            source={section.content}
-                        />
-                        {section.formats &&
-                            section.formats.map((format) => (
-                                <React.Fragment>
-                                    <Typography
-                                        variant="h5"
-                                        className={classes.formatTitle}
-                                    >
-                                        {format.title}
-                                    </Typography>
-                                    {format.description && (
-                                        <ReactMarkdown
-                                            className={classes.markdown}
-                                            escapeHtml={true}
-                                            source={format.description}
-                                        />
-                                    )}
-                                    {format.items.map((item) => (
-                                        <div>
-                                            <div
-                                                className={
-                                                    classes.formatItemHeader
-                                                }
-                                            >
-                                                <Typography
-                                                    variant="h6"
-                                                    className={
-                                                        classes.formatItemName
-                                                    }
-                                                >
-                                                    {item.name}
-                                                </Typography>
-                                                <Typography
-                                                    variant="h6"
-                                                    className={
-                                                        classes.formatItemType
-                                                    }
-                                                >
-                                                    {item.type}
-                                                </Typography>
-                                            </div>
-                                            <ReactMarkdown
-                                                className={classes.markdown}
-                                                escapeHtml={true}
-                                                source={item.description}
-                                            />
-                                        </div>
-                                    ))}
-                                </React.Fragment>
-                            ))}
-                    </Grid>
-                    {section.snippets && (
+            {pages.map((page) => (
+                <React.Fragment>
+                    {renderPageStart(page)}
+                    {page.sections.map((section) => (
                         <Grid
-                            item={true}
-                            xs={12}
-                            lg={6}
-                            className={classes.snippets}
+                            container={true}
+                            className={classes.section}
+                            spacing={3}
                         >
-                            <div className={classes.snippetHeader}>
+                            <Grid item={true} xs={12} lg={6}>
                                 <Typography
                                     variant="h5"
-                                    className={classes.snippetTitle}
+                                    className={classes.sectionTitle}
                                 >
-                                    {section.snippetTitle}
+                                    {section.title}
                                 </Typography>
-                                {section.generalSnippet || (
-                                    <Button
-                                        onClick={handleClick}
-                                        className={classes.language}
-                                        endIcon={<DownIcon />}
-                                    >
-                                        {language.title}
-                                    </Button>
-                                )}
-                                <Button size="small" className={classes.copy}>
-                                    Copy
-                                </Button>
-                            </div>
-                            {renderSnippet(section)}
+                                <ReactMarkdown
+                                    className={classes.markdown}
+                                    escapeHtml={true}
+                                    source={section.content}
+                                />
+                                {section.formats &&
+                                    section.formats.map((format) => (
+                                        <React.Fragment>
+                                            <Typography
+                                                variant="h5"
+                                                className={classes.formatTitle}
+                                            >
+                                                {format.title}
+                                            </Typography>
+                                            {format.description && (
+                                                <ReactMarkdown
+                                                    className={classes.markdown}
+                                                    escapeHtml={true}
+                                                    source={format.description}
+                                                />
+                                            )}
+                                            {format.items.map((item) => (
+                                                <div>
+                                                    <div
+                                                        className={
+                                                            classes.formatItemHeader
+                                                        }
+                                                    >
+                                                        <Typography
+                                                            variant="h6"
+                                                            className={
+                                                                classes.formatItemName
+                                                            }
+                                                        >
+                                                            {item.name}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant="h6"
+                                                            className={
+                                                                classes.formatItemType
+                                                            }
+                                                        >
+                                                            {item.type}
+                                                        </Typography>
+                                                    </div>
+                                                    <ReactMarkdown
+                                                        className={
+                                                            classes.markdown
+                                                        }
+                                                        escapeHtml={true}
+                                                        source={
+                                                            item.description
+                                                        }
+                                                    />
+                                                </div>
+                                            ))}
+                                        </React.Fragment>
+                                    ))}
+                            </Grid>
+                            {section.snippets && (
+                                <Grid
+                                    item={true}
+                                    xs={12}
+                                    lg={6}
+                                    className={classes.snippets}
+                                >
+                                    <div className={classes.snippetHeader}>
+                                        <Typography
+                                            variant="h5"
+                                            className={classes.snippetTitle}
+                                        >
+                                            {section.snippetTitle}
+                                        </Typography>
+                                        {section.generalSnippet || (
+                                            <Button
+                                                onClick={handleClick}
+                                                className={classes.language}
+                                                endIcon={<DownIcon />}
+                                            >
+                                                {language.title}
+                                            </Button>
+                                        )}
+                                        <Button
+                                            size="small"
+                                            className={classes.copy}
+                                        >
+                                            Copy
+                                        </Button>
+                                    </div>
+                                    {renderSnippet(section)}
+                                </Grid>
+                            )}
                         </Grid>
-                    )}
-                </Grid>
+                    ))}
+                </React.Fragment>
             ))}
             <Menu
                 anchorEl={languageAnchor}

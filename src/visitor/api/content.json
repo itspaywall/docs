@@ -1,98 +1,199 @@
 [
     {
+        "id": "introduction",
         "title": "Introduction",
-        "content": "The Hubble API lets you view and manage data like accounts, subscriptions, invoices, transactions, and plans.\n\nThe Hubble API is basically a REST API. It has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.",
+        "description": "The Hubble API lets you view and manage data like accounts, subscriptions, invoices, transactions, and plans.\n\nThe Hubble API is basically a REST API. It has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.",
         "snippetTitle": "BASE URL",
-        "generalSnippet": true,
-        "snippets": [
+        "snippetContent": "https://api.hubblesuite.com",
+        "sections": [
             {
-                "language": null,
-                "content": "https://api.hubblesuite.com"
-            }
-        ]
-    },
-    {
-        "title": "Authentication",
-        "content": "The Hubble API uses API keys to authenticate requests. It uses bearer authentication for its HTTP authentication scheme. You can view and manage your API keys in the Hubble Console.\n\nAPI keys provide access to senstivie information. Therefore, be sure to keep them secure! Do not share your API keys in places such as GitHub, client-side code, and so on.\n\nAll API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.",
-        "generalSnippet": false,
-        "snippetTitle": "REQUEST WITH AUTHENTICATION",
-        "snippets": [
-            {
-                "language": "curl",
-                "content": "curl -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNWY1ZGRkMjM5YWJkYTkxY2YwZWI3YzRiIiwiaWF0IjoxNjAwMTgzOTY5LCJleHAiOjE2MDA3ODg3NjksImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImlzcyI6Imh0dHBzOi8vd3d3Lmh1YmJsZXN1aXRlLmNvbSJ9.qmKq_e0I_0XVh3YYqBUOrUu6_tH16-EijedmJtK-EFg\""
-            }
-        ]
-    },
-    {
-        "title": "Errors",
-        "content": "The Hubble API uses HTTP response codes to indicate the success or failure of a request."
-    },
-    {
-        "title": "Pagination",
-        "content": "Most resources have support for bulk fetches via \"list\" API methods. For instance, you can list accounts, list subscriptions, list invoices, and so on. These list API methods share a common structure for requests and responses. The common attributes in responses include:`totalRecords`, `page`, `limit`, `totalPages`, `previousPage`, and `nextPage`.\n\nSimiarly, the common parameters in requests include: `page` and `limit`, based on which Hubble internally implements a cursor based pagination scheme. Further, some endpoints accept optional filters like `dateRange`, `startDate`, `endDate`, and `search`.",
-        "snippetTitle": "SAMPLE RESPONSE",
-        "generalSnippet": true,
-        "snippets": [
-            {
-                "language": null,
-                "content": "```json\n{\r\n    \"totalRecords\": 193,\r\n    \"page\": 0,\r\n    \"limit\": 20,\r\n    \"previousPage\": null,\r\n    \"nextPage\": 1,\r\n    \"records\": [ ... ]\r\n}\n```"
-            }
-        ],
-        "formats": [
-            {
-                "title": "Request",
-                "description": "",
-                "items": [
+                "title": "Authentication",
+                "content": "The Hubble API uses API keys to authenticate requests. It uses bearer authentication for its HTTP authentication scheme. You can view and manage your API keys in the Hubble Console.\n\nAPI keys provide access to senstivie information. Therefore, be sure to keep them secure! Do not share your API keys in places such as GitHub, client-side code, and so on.\n\nAll API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.",
+                "generalSnippet": false,
+                "snippetTitle": "REQUEST WITH AUTHENTICATION",
+                "snippets": [
                     {
-                        "name": "page",
-                        "type": "integer",
-                        "description": "The number of the page you want to retrieve. It is zero based. The first page is at 0, the second at 1, and so on."
-                    },
-                    {
-                        "name": "limit",
-                        "type": "integer",
-                        "description": "The maximum number of records you want to retrieve, between 10 and 100."
+                        "language": "curl",
+                        "content": "curl -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNWY1ZGRkMjM5YWJkYTkxY2YwZWI3YzRiIiwiaWF0IjoxNjAwMTgzOTY5LCJleHAiOjE2MDA3ODg3NjksImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImlzcyI6Imh0dHBzOi8vd3d3Lmh1YmJsZXN1aXRlLmNvbSJ9.qmKq_e0I_0XVh3YYqBUOrUu6_tH16-EijedmJtK-EFg\""
                     }
                 ]
             },
             {
-                "title": "Response",
-                "description": "",
-                "items": [
+                "title": "Errors",
+                "content": "The Hubble API uses HTTP response codes to indicate the success or failure of a request."
+            },
+            {
+                "title": "Pagination",
+                "content": "Most resources have support for bulk fetches via \"list\" API methods. For instance, you can list accounts, list subscriptions, list invoices, and so on. These list API methods share a common structure for requests and responses. The common attributes in responses include:`totalRecords`, `page`, `limit`, `totalPages`, `previousPage`, and `nextPage`.\n\nSimiarly, the common parameters in requests include: `page` and `limit`, based on which Hubble internally implements a cursor based pagination scheme. Further, some endpoints accept optional filters like `dateRange`, `startDate`, `endDate`, and `search`.",
+                "snippetTitle": "SAMPLE RESPONSE",
+                "generalSnippet": true,
+                "snippets": [
                     {
-                        "name": "page",
-                        "type": "integer",
-                        "description": "The current page number. It is zero based. The first page is at 0, the second at 1, and so on."
+                        "language": null,
+                        "content": "```json\n{\r\n    \"totalRecords\": 193,\r\n    \"page\": 0,\r\n    \"limit\": 20,\r\n    \"previousPage\": null,\r\n    \"nextPage\": 1,\r\n    \"records\": [ ... ]\r\n}\n```"
+                    }
+                ],
+                "formats": [
+                    {
+                        "title": "Request",
+                        "description": "",
+                        "items": [
+                            {
+                                "name": "page",
+                                "type": "integer",
+                                "description": "The number of the page you want to retrieve. It is zero based. The first page is at 0, the second at 1, and so on."
+                            },
+                            {
+                                "name": "limit",
+                                "type": "integer",
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
+                            }
+                        ]
                     },
                     {
-                        "name": "totalRecords",
-                        "type": "integer",
-                        "description": "The total number of records."
-                    },
+                        "title": "Response",
+                        "description": "",
+                        "items": [
+                            {
+                                "name": "page",
+                                "type": "integer",
+                                "description": "The current page number. It is zero based. The first page is at 0, the second at 1, and so on."
+                            },
+                            {
+                                "name": "totalRecords",
+                                "type": "integer",
+                                "description": "The total number of records."
+                            },
+                            {
+                                "name": "limit",
+                                "type": "integer",
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
+                            },
+                            {
+                                "name": "totalPages",
+                                "type": "integer",
+                                "description": "The total number of pages based on `limit` and `totalRecords`."
+                            },
+                            {
+                                "name": "previousPage",
+                                "type": "integer",
+                                "description": "The previous zero based page number, if any. Otherwise it is `null`."
+                            },
+                            {
+                                "name": "nextPage",
+                                "type": "integer",
+                                "description": "The next zero based page number, if any. Otherwise it is `null`."
+                            },
+                            {
+                                "name": "records",
+                                "type": "array",
+                                "description": "An array of records you requested."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "accounts",
+        "title": "Accounts",
+        "description": "The account object represents your customer and stores all their information. You can access other objects such subscriptions, transactions, and invoices through it.",
+        "snippetTitle": "ENDPOINTS",
+        "snippetContent": "```\nPOST /accounts\nGET /accounts\nGET /accounts/:identifier\nPUT /accounts/:identifier\n```",
+        "sections": [
+            {
+                "title": "Account Object Schema",
+                "content": "All the account endpoints adhere to the schema described here.",
+                "generalSnippet": true,
+                "snippetTitle": "SAMPLE ACCOUNT OBJECT",
+                "snippets": [
                     {
-                        "name": "limit",
-                        "type": "integer",
-                        "description": "The maximum number of records you want to retrieve, between 10 and 100."
-                    },
+                        "language": null,
+                        "content": "```json\n{\r\n    \"id\": \"5f6190b1966a8f0fd205a00a\",\r\n    \"subscriptionIds\": [],\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat 03, JVM Residency\",\r\n    \"addressLine2\": \"19th Cross, JS Town\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560033\",\r\n    \"createdAt\": \"2020-09-16T04:12:33.784Z\",\r\n    \"updatedAt\": \"2020-09-16T04:12:33.784Z\"\r\n}\n```"
+                    }
+                ],
+                "formats": [
                     {
-                        "name": "totalPages",
-                        "type": "integer",
-                        "description": "The total number of pages based on `limit` and `totalRecords`."
-                    },
-                    {
-                        "name": "previousPage",
-                        "type": "integer",
-                        "description": "The previous zero based page number, if any. Otherwise it is `null`."
-                    },
-                    {
-                        "name": "nextPage",
-                        "type": "integer",
-                        "description": "The next zero based page number, if any. Otherwise it is `null`."
-                    },
-                    {
-                        "name": "records",
-                        "type": "array",
-                        "description": "An array of records you requested."
+                        "title": "Attributes",
+                        "description": "",
+                        "items": [
+                            {
+                                "name": "id",
+                                "type": "string",
+                                "description": "A string of 24 hexadecimal digits that uniquely identifies the account across Hubble Subscriptions. It cannot be generated by the client."
+                            },
+                            {
+                                "name": "subscriptionIds",
+                                "type": "array",
+                                "description": "An array of subscription identifiers. Each identifier represents a subscription owned by the account."
+                            },
+                            {
+                                "name": "userName",
+                                "type": "string",
+                                "description": "The user name that uniquely identifies the account across your organization."
+                            },
+                            {
+                                "name": "firstName",
+                                "type": "string",
+                                "description": "The first name of the account holder."
+                            },
+                            {
+                                "name": "lastName",
+                                "type": "string",
+                                "description": "The last name of the account holder."
+                            },
+                            {
+                                "name": "emailAddress",
+                                "type": "string",
+                                "description": "The email address of the account holder."
+                            },
+                            {
+                                "name": "phoneNumber",
+                                "type": "string",
+                                "description": "The phone number of the account holder."
+                            },
+                            {
+                                "name": "addressLine1",
+                                "type": "string",
+                                "description": "The first address line of the account holder."
+                            },
+                            {
+                                "name": "addressLine2",
+                                "type": "string",
+                                "description": "The second address line of the account holder."
+                            },
+                            {
+                                "name": "city",
+                                "type": "string",
+                                "description": "The city of the account holder."
+                            },
+                            {
+                                "name": "state",
+                                "type": "string",
+                                "description": "The state of the account holder."
+                            },
+                            {
+                                "name": "country",
+                                "type": "string",
+                                "description": "The country of the account holder."
+                            },
+                            {
+                                "name": "zipCode",
+                                "type": "string",
+                                "description": "The zip code of the account holder."
+                            },
+                            {
+                                "name": "createdAt",
+                                "type": "string",
+                                "description": "The time when the account was created, expressed in UTC format."
+                            },
+                            {
+                                "name": "updatedAt",
+                                "type": "string",
+                                "description": "The time when the account was last updated, expressed in UTC format."
+                            }
+                        ]
                     }
                 ]
             }
