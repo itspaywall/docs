@@ -8,6 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import DownIcon from "@material-ui/icons/KeyboardArrowDown";
+import ReactMarkdown from "react-markdown";
 
 import sections from "./content.json";
 
@@ -119,11 +120,7 @@ function Pricing(props) {
                         >
                             {section.title}
                         </Typography>
-                        {section.paragraphs.map((paragraph) => (
-                            <Typography paragraph={true}>
-                                {paragraph}
-                            </Typography>
-                        ))}
+                        <ReactMarkdown source={section.content} />
                     </Grid>
                     <Grid
                         item={true}
