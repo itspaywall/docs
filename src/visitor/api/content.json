@@ -14,6 +14,7 @@
     {
         "title": "Authentication",
         "content": "The Hubble API uses API keys to authenticate requests. It uses bearer authentication for its HTTP authentication scheme. You can view and manage your API keys in the Hubble Console.\n\nAPI keys provide access to senstivie information. Therefore, be sure to keep them secure! Do not share your API keys in places such as GitHub, client-side code, and so on.\n\nAll API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.",
+        "generalSnippet": false,
         "snippetTitle": "REQUEST WITH AUTHENTICATION",
         "snippets": [
             {
@@ -24,12 +25,41 @@
     },
     {
         "title": "Errors",
-        "content": "The Hubble API uses HTTP response codes to indicate the success or failure of a request.",
-        "snippetTitle": "REQUEST WITH AUTHENTICATION",
+        "content": "The Hubble API uses HTTP response codes to indicate the success or failure of a request."
+    },
+    {
+        "title": "Pagination",
+        "content": "Most resources have support for bulk fetches via \"list\" API methods. For instance, you can list accounts, list subscriptions, list invoices, and so on. These list API methods share a common structure for requests and responses. The common attributes in responses include:`totalRecords`, `page`, `limit`, `totalPages`, `previousPage`, and `nextPage`.\n\nSimiarly, the common parameters in requests include: `page` and `limit`, based on which Hubble internally implements a cursor based pagination scheme. Further, some endpoints accept optional filters like `dateRange`, `startDate`, `endDate`, and `search`.",
+        "snippetTitle": "SAMPLE RESPONSE",
+        "generalSnippet": true,
         "snippets": [
             {
-                "language": "curl",
-                "content": "curl -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNWY1ZGRkMjM5YWJkYTkxY2YwZWI3YzRiIiwiaWF0IjoxNjAwMTgzOTY5LCJleHAiOjE2MDA3ODg3NjksImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImlzcyI6Imh0dHBzOi8vd3d3Lmh1YmJsZXN1aXRlLmNvbSJ9.qmKq_e0I_0XVh3YYqBUOrUu6_tH16-EijedmJtK-EFg\""
+                "language": null,
+                "content": "```json\n{\r\n    \"totalRecords\": 193,\r\n    \"page\": 0,\r\n    \"limit\": 20,\r\n    \"previousPage\": null,\r\n    \"nextPage\": 1,\r\n    \"records\": [ ... ]\r\n}\n```"
+            }
+        ],
+        "formats": [
+            {
+                "title": "Request",
+                "description": "",
+                "items": [
+                    {
+                        "name": "page",
+                        "type": "integer",
+                        "description": "The number of the page you want to retrieve. It is zero based. The first page is at 0, the second at 1, and so on."
+                    }
+                ]
+            },
+            {
+                "title": "Response",
+                "description": "",
+                "items": [
+                    {
+                        "name": "page",
+                        "type": "integer",
+                        "description": "The current page number. It is zero based. The first page is at 0, the second at 1, and so on."
+                    }
+                ]
             }
         ]
     }

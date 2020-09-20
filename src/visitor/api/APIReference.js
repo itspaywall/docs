@@ -43,13 +43,24 @@ const useStyles = makeStyles((theme) => ({
     snippetContent: {
         background: grey[700],
         color: "white",
-        padding: 16,
+        paddingLeft: 16,
+        paddingRight: 16,
+        paddingTop: 0,
+        paddingBottom: 0,
         fontSize: 14,
         fontWeight: 400,
         fontFamily: "Courier New",
         borderRadius: "0px 0px 6px 6px",
         overflow: "auto",
         whiteSpace: "nowrap",
+        width: "100%",
+        margin: 0,
+        "& code": {
+            fontFamily: "Courier Prime",
+        },
+        "& a": {
+            color: "white",
+        },
     },
     copy: {
         color: "white",
@@ -59,6 +70,48 @@ const useStyles = makeStyles((theme) => ({
         width: 130,
         paddingLeft: 8,
         paddingRight: 8,
+    },
+    markdown: {
+        fontSize: 16,
+        "& code": {
+            fontFamily: "Courier Prime",
+            background: grey[200],
+            fontSize: 14,
+            padding: 4,
+        },
+        "& a": {
+            color: "white",
+        },
+        "& p": {
+            marginTop: 0,
+            marginBottom: 16,
+        },
+    },
+    formatTitle: {
+        fontSize: 18,
+        fontWeight: 600,
+    },
+    formatItemHeader: {
+        display: "flex",
+    },
+    formatItemName: {
+        fontSize: 16,
+        fontWeight: 600,
+        marginTop: 8,
+        marginBottom: 4,
+        fontFamily: "Courier Prime",
+    },
+    formatItemType: {
+        background: grey[600],
+        color: "white",
+        fontSize: 12,
+        padding: "4px 12px 0px 12px",
+        fontWeight: 600,
+        marginTop: 8,
+        marginBottom: 4,
+        fontFamily: "Courier Prime",
+        borderRadius: 12,
+        marginLeft: 8,
     },
 }));
 
@@ -98,10 +151,10 @@ function Pricing(props) {
         }
 
         return (
-            <Typography variant="h5" className={classes.snippetContent}>
-                {snippet && snippet.content}
-                {!snippet && "No content"}
-            </Typography>
+            <ReactMarkdown
+                source={snippet ? snippet.content : "No content"}
+                className={classes.snippetContent}
+            />
         );
     };
 
@@ -120,36 +173,91 @@ function Pricing(props) {
                         >
                             {section.title}
                         </Typography>
-                        <ReactMarkdown source={section.content} />
+                        <ReactMarkdown
+                            className={classes.markdown}
+                            escapeHtml={true}
+                            source={section.content}
+                        />
+                        {section.formats &&
+                            section.formats.map((format) => (
+                                <React.Fragment>
+                                    <Typography
+                                        variant="h5"
+                                        className={classes.formatTitle}
+                                    >
+                                        {format.title}
+                                    </Typography>
+                                    {format.description && (
+                                        <ReactMarkdown
+                                            className={classes.markdown}
+                                            escapeHtml={true}
+                                            source={format.description}
+                                        />
+                                    )}
+                                    {format.items.map((item) => (
+                                        <div>
+                                            <div
+                                                className={
+                                                    classes.formatItemHeader
+                                                }
+                                            >
+                                                <Typography
+                                                    variant="h6"
+                                                    className={
+                                                        classes.formatItemName
+                                                    }
+                                                >
+                                                    {item.name}
+                                                </Typography>
+                                                <Typography
+                                                    variant="h6"
+                                                    className={
+                                                        classes.formatItemType
+                                                    }
+                                                >
+                                                    {item.type}
+                                                </Typography>
+                                            </div>
+                                            <ReactMarkdown
+                                                className={classes.markdown}
+                                                escapeHtml={true}
+                                                source={item.description}
+                                            />
+                                        </div>
+                                    ))}
+                                </React.Fragment>
+                            ))}
                     </Grid>
-                    <Grid
-                        item={true}
-                        xs={12}
-                        lg={6}
-                        className={classes.snippets}
-                    >
-                        <div className={classes.snippetHeader}>
-                            <Typography
-                                variant="h5"
-                                className={classes.snippetTitle}
-                            >
-                                {section.snippetTitle}
-                            </Typography>
-                            {section.generalSnippet || (
-                                <Button
-                                    onClick={handleClick}
-                                    className={classes.language}
-                                    endIcon={<DownIcon />}
+                    {section.snippets && (
+                        <Grid
+                            item={true}
+                            xs={12}
+                            lg={6}
+                            className={classes.snippets}
+                        >
+                            <div className={classes.snippetHeader}>
+                                <Typography
+                                    variant="h5"
+                                    className={classes.snippetTitle}
                                 >
-                                    {language.title}
+                                    {section.snippetTitle}
+                                </Typography>
+                                {section.generalSnippet || (
+                                    <Button
+                                        onClick={handleClick}
+                                        className={classes.language}
+                                        endIcon={<DownIcon />}
+                                    >
+                                        {language.title}
+                                    </Button>
+                                )}
+                                <Button size="small" className={classes.copy}>
+                                    Copy
                                 </Button>
-                            )}
-                            <Button size="small" className={classes.copy}>
-                                Copy
-                            </Button>
-                        </div>
-                        {renderSnippet(section)}
-                    </Grid>
+                            </div>
+                            {renderSnippet(section)}
+                        </Grid>
+                    )}
                 </Grid>
             ))}
             <Menu
