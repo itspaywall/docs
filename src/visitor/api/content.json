@@ -1,0 +1,32 @@
+[
+    {
+        "title": "Introduction",
+        "paragraphs": [
+            "The Hubble API lets you view and manage data like accounts, subscriptions, invoices, transactions, and plans.",
+            "The Hubble API is basically a REST API. It has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs."
+        ],
+        "snippetTitle": "BASE URL",
+        "generalSnippet": true,
+        "snippets": [
+            {
+                "language": null,
+                "content": "https://api.hubblesuite.com"
+            }
+        ]
+    },
+    {
+        "title": "Authentication",
+        "paragraphs": [
+            "The Hubble API uses API keys to authenticate requests. It uses bearer authentication for its HTTP authentication scheme. You can view and manage your API keys in the Hubble Console.",
+            "API keys provide access to senstivie information. Therefore, be sure to keep them secure! Do not share your API keys in places such as GitHub, client-side code, and so on.",
+            "All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail."
+        ],
+        "snippetTitle": "REQUEST WITH AUTHENTICATION",
+        "snippets": [
+            {
+                "language": "curl",
+                "content": "curl -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNWY1ZGRkMjM5YWJkYTkxY2YwZWI3YzRiIiwiaWF0IjoxNjAwMTgzOTY5LCJleHAiOjE2MDA3ODg3NjksImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImlzcyI6Imh0dHBzOi8vd3d3Lmh1YmJsZXN1aXRlLmNvbSJ9.qmKq_e0I_0XVh3YYqBUOrUu6_tH16-EijedmJtK-EFg\""
+            }
+        ]
+    }
+]
