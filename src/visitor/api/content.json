@@ -47,6 +47,11 @@
                         "name": "page",
                         "type": "integer",
                         "description": "The number of the page you want to retrieve. It is zero based. The first page is at 0, the second at 1, and so on."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "integer",
+                        "description": "The maximum number of records you want to retrieve, between 10 and 100."
                     }
                 ]
             },
@@ -58,6 +63,36 @@
                         "name": "page",
                         "type": "integer",
                         "description": "The current page number. It is zero based. The first page is at 0, the second at 1, and so on."
+                    },
+                    {
+                        "name": "totalRecords",
+                        "type": "integer",
+                        "description": "The total number of records."
+                    },
+                    {
+                        "name": "limit",
+                        "type": "integer",
+                        "description": "The maximum number of records you want to retrieve, between 10 and 100."
+                    },
+                    {
+                        "name": "totalPages",
+                        "type": "integer",
+                        "description": "The total number of pages based on `limit` and `totalRecords`."
+                    },
+                    {
+                        "name": "previousPage",
+                        "type": "integer",
+                        "description": "The previous zero based page number, if any. Otherwise it is `null`."
+                    },
+                    {
+                        "name": "nextPage",
+                        "type": "integer",
+                        "description": "The next zero based page number, if any. Otherwise it is `null`."
+                    },
+                    {
+                        "name": "records",
+                        "type": "array",
+                        "description": "An array of records you requested."
                     }
                 ]
             }
