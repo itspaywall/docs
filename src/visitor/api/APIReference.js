@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core";
-import { grey } from "@material-ui/core/colors";
+import { grey, red } from "@material-ui/core/colors";
 import DownIcon from "@material-ui/icons/KeyboardArrowDown";
 import ReactMarkdown from "react-markdown";
 
@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 8,
         fontWeight: 600,
     },
-    snippet: {},
+    snippet: {
+        marginBottom: 24,
+    },
     snippetHeader: {
         display: "flex",
         alignItems: "center",
@@ -94,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
     },
     formatTitle: {
         fontSize: 18,
+        marginBottom: 8,
         fontWeight: 600,
     },
     formatItemHeader: {
@@ -108,6 +111,18 @@ const useStyles = makeStyles((theme) => ({
     },
     formatItemType: {
         background: grey[600],
+        color: "white",
+        fontSize: 12,
+        padding: "4px 12px 0px 12px",
+        fontWeight: 600,
+        marginTop: 8,
+        marginBottom: 4,
+        fontFamily: "Courier Prime",
+        borderRadius: 12,
+        marginLeft: 8,
+    },
+    formatItemRequired: {
+        background: red[500],
         color: "white",
         fontSize: 12,
         padding: "4px 12px 0px 12px",
@@ -183,21 +198,55 @@ function Pricing(props) {
         </Grid>
     );
 
-    const renderSnippet = (section) => {
-        let snippet;
-        if (section.generalSnippet) {
-            snippet = section.snippets[0];
+    const renderSnippet = (snippet) => {
+        let variant;
+        if (snippet.general) {
+            variant = snippet.variants[0];
         } else {
-            snippet = section.snippets.find(
-                (snippet) => snippet.language === language.id
+            variant = snippet.variants.find(
+                (variant) => variant.language === language.id
             );
         }
 
         return (
             <ReactMarkdown
-                source={snippet ? snippet.content : "No content"}
+                source={variant ? variant.content : "No content"}
                 className={classes.snippetContent}
             />
+        );
+    };
+
+    const renderSnippetList = (snippets) => {
+        return (
+            snippets && (
+                <Grid item={true} xs={12} lg={6} className={classes.snippets}>
+                    {snippets.map((snippet) => (
+                        <div className={classes.snippet}>
+                            <div className={classes.snippetHeader}>
+                                <Typography
+                                    variant="h5"
+                                    className={classes.snippetTitle}
+                                >
+                                    {snippet.title}
+                                </Typography>
+                                {snippet.general || (
+                                    <Button
+                                        onClick={handleClick}
+                                        className={classes.language}
+                                        endIcon={<DownIcon />}
+                                    >
+                                        {language.title}
+                                    </Button>
+                                )}
+                                <Button size="small" className={classes.copy}>
+                                    Copy
+                                </Button>
+                            </div>
+                            {renderSnippet(snippet)}
+                        </div>
+                    ))}
+                </Grid>
+            )
         );
     };
 
@@ -263,6 +312,16 @@ function Pricing(props) {
                                                         >
                                                             {item.type}
                                                         </Typography>
+                                                        {item.required && (
+                                                            <Typography
+                                                                variant="h6"
+                                                                className={
+                                                                    classes.formatItemRequired
+                                                                }
+                                                            >
+                                                                required
+                                                            </Typography>
+                                                        )}
                                                     </div>
                                                     <ReactMarkdown
                                                         className={
@@ -278,39 +337,7 @@ function Pricing(props) {
                                         </React.Fragment>
                                     ))}
                             </Grid>
-                            {section.snippets && (
-                                <Grid
-                                    item={true}
-                                    xs={12}
-                                    lg={6}
-                                    className={classes.snippets}
-                                >
-                                    <div className={classes.snippetHeader}>
-                                        <Typography
-                                            variant="h5"
-                                            className={classes.snippetTitle}
-                                        >
-                                            {section.snippetTitle}
-                                        </Typography>
-                                        {section.generalSnippet || (
-                                            <Button
-                                                onClick={handleClick}
-                                                className={classes.language}
-                                                endIcon={<DownIcon />}
-                                            >
-                                                {language.title}
-                                            </Button>
-                                        )}
-                                        <Button
-                                            size="small"
-                                            className={classes.copy}
-                                        >
-                                            Copy
-                                        </Button>
-                                    </div>
-                                    {renderSnippet(section)}
-                                </Grid>
-                            )}
+                            {renderSnippetList(section.snippets)}
                         </Grid>
                     ))}
                 </React.Fragment>

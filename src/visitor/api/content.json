@@ -9,12 +9,16 @@
             {
                 "title": "Authentication",
                 "content": "The Hubble API uses API keys to authenticate requests. It uses bearer authentication for its HTTP authentication scheme. You can view and manage your API keys in the Hubble Console.\n\nAPI keys provide access to senstivie information. Therefore, be sure to keep them secure! Do not share your API keys in places such as GitHub, client-side code, and so on.\n\nAll API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.",
-                "generalSnippet": false,
-                "snippetTitle": "REQUEST WITH AUTHENTICATION",
                 "snippets": [
                     {
-                        "language": "curl",
-                        "content": "curl -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNWY1ZGRkMjM5YWJkYTkxY2YwZWI3YzRiIiwiaWF0IjoxNjAwMTgzOTY5LCJleHAiOjE2MDA3ODg3NjksImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImlzcyI6Imh0dHBzOi8vd3d3Lmh1YmJsZXN1aXRlLmNvbSJ9.qmKq_e0I_0XVh3YYqBUOrUu6_tH16-EijedmJtK-EFg\""
+                        "general": false,
+                        "title": "REQUEST WITH AUTHENTICATION",
+                        "variants": [
+                            {
+                                "language": "curl",
+                                "content": "curl -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiNWY1ZGRkMjM5YWJkYTkxY2YwZWI3YzRiIiwiaWF0IjoxNjAwMTgzOTY5LCJleHAiOjE2MDA3ODg3NjksImF1ZCI6Im5vZGVqcy1qd3QtYXV0aCIsImlzcyI6Imh0dHBzOi8vd3d3Lmh1YmJsZXN1aXRlLmNvbSJ9.qmKq_e0I_0XVh3YYqBUOrUu6_tH16-EijedmJtK-EFg\""
+                            }
+                        ]
                     }
                 ]
             },
@@ -25,12 +29,16 @@
             {
                 "title": "Pagination",
                 "content": "Most resources have support for bulk fetches via \"list\" API methods. For instance, you can list accounts, list subscriptions, list invoices, and so on. These list API methods share a common structure for requests and responses. The common attributes in responses include:`totalRecords`, `page`, `limit`, `totalPages`, `previousPage`, and `nextPage`.\n\nSimiarly, the common parameters in requests include: `page` and `limit`, based on which Hubble internally implements a cursor based pagination scheme. Further, some endpoints accept optional filters like `dateRange`, `startDate`, `endDate`, and `search`.",
-                "snippetTitle": "SAMPLE RESPONSE",
-                "generalSnippet": true,
                 "snippets": [
                     {
-                        "language": null,
-                        "content": "```json\n{\r\n    \"totalRecords\": 193,\r\n    \"page\": 0,\r\n    \"limit\": 20,\r\n    \"previousPage\": null,\r\n    \"nextPage\": 1,\r\n    \"records\": [ ... ]\r\n}\n```"
+                        "title": "SAMPLE RESPONSE",
+                        "general": true,
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"totalRecords\": 193,\r\n    \"page\": 0,\r\n    \"limit\": 20,\r\n    \"previousPage\": null,\r\n    \"nextPage\": 1,\r\n    \"records\": [ ... ]\r\n}\n```"
+                            }
+                        ]
                     }
                 ],
                 "formats": [
@@ -105,12 +113,16 @@
             {
                 "title": "Account Object Schema",
                 "content": "All the account endpoints adhere to the schema described here.",
-                "generalSnippet": true,
-                "snippetTitle": "SAMPLE ACCOUNT OBJECT",
                 "snippets": [
                     {
-                        "language": null,
-                        "content": "```json\n{\r\n    \"id\": \"5f6190b1966a8f0fd205a00a\",\r\n    \"subscriptionIds\": [],\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat 03, JVM Residency\",\r\n    \"addressLine2\": \"19th Cross, JS Town\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560033\",\r\n    \"createdAt\": \"2020-09-16T04:12:33.784Z\",\r\n    \"updatedAt\": \"2020-09-16T04:12:33.784Z\"\r\n}\n```"
+                        "general": true,
+                        "title": "SAMPLE ACCOUNT OBJECT",
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"id\": \"5f6190b1966a8f0fd205a00a\",\r\n    \"subscriptionIds\": [],\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #193, JVM Residency\",\r\n    \"addressLine2\": \"19th Cross, JS Town\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560033\",\r\n    \"createdAt\": \"2020-09-16T04:12:33.784Z\",\r\n    \"updatedAt\": \"2020-09-16T04:12:33.784Z\"\r\n}\n```"
+                            }
+                        ]
                     }
                 ],
                 "formats": [
@@ -196,316 +208,233 @@
                         ]
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "id": "subscriptions",
-        "title": "Subscriptions",
-        "description": "A subscription represents an arrangement for regular payments. Basically, it is an association between a plan and an account, where the plan tells Hubble Subscriptions how much to bill the customer.",
-        "snippetTitle": "ENDPOINTS",
-        "snippetContent": "```\nPOST /subscriptions\nGET /subscriptions\nGET /subscriptions/:id\n```",
-        "sections": [
+            },
             {
-                "title": "Subscription Object Schema",
-                "content": "All the subscription endpoints adhere to the schema described here.",
-                "generalSnippet": true,
-                "snippetTitle": "SAMPLE SUBSCRIPTION OBJECT",
+                "title": "Create account",
+                "content": "You can create a new account at the `POST /accounts` endpoint.",
                 "snippets": [
                     {
-                        "language": null,
-                        "content": "```json\n{\r\n    \"id\": \"5f6190b1966a8f0fd205a00a\",\r\n    \"subscriptionIds\": [],\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat 03, JVM Residency\",\r\n    \"addressLine2\": \"19th Cross, JS Town\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560033\",\r\n    \"createdAt\": \"2020-09-16T04:12:33.784Z\",\r\n    \"updatedAt\": \"2020-09-16T04:12:33.784Z\"\r\n}\n```"
+                        "title": "SAMPLE REQUEST",
+                        "general": false,
+                        "variants": [
+                            {
+                                "language": "curl",
+                                "content": "```bash\ndata=\\\r\n'{\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #193, JVM Residency\",\r\n    \"addressLine2\": \"19th Cross, JS Town\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560033\"\r\n}'\r\necho $data | curl -X POST https://api.hubblesuite.com/accounts \\\r\n-H \"Authorization: Bearer <API_KEY>\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d @-\n```"
+                            }
+                        ]
+                    },
+                    {
+                        "general": true,
+                        "title": "SAMPLE RESPONSE",
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"id\": \"5f6190b1966a8f0fd205a00a\",\r\n    \"subscriptionIds\": [],\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #193, JVM Residency\",\r\n    \"addressLine2\": \"19th Cross, JS Town\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560033\",\r\n    \"createdAt\": \"2020-09-16T04:12:33.784Z\",\r\n    \"updatedAt\": \"2020-09-16T04:12:33.784Z\"\r\n}\n```"
+                            }
+                        ]
                     }
                 ],
                 "formats": [
                     {
-                        "title": "Attributes",
+                        "title": "Request",
                         "description": "",
                         "items": [
                             {
-                                "name": "id",
+                                "name": "userName",
                                 "type": "string",
-                                "description": "A string of 24 hexadecimal digits that uniquely identifies the subscription across Hubble Subscriptions. It cannot be generated by the client."
+                                "description": "The number of the page you want to retrieve. It is zero based. The first page is at 0, the second at 1, and so on."
                             },
                             {
-                                "name": "ownerId",
+                                "name": "firstName",
                                 "type": "string",
-                                "description": "A string of 24 hexadecimal digits that identifies the organization that owns the subscription."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             },
                             {
-                                "name": "planId",
+                                "name": "lastName",
                                 "type": "string",
-                                "description": "A string of 24 hexadecimal digits that identifies the associated plan."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             },
                             {
-                                "name": "accountId",
+                                "name": "emailAddress",
                                 "type": "string",
-                                "description": "A string of 24 hexadecimal digits that identifies the associated account."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             },
                             {
-                                "name": "quantity",
-                                "type": "number",
-                                "description": "The quantity of service given to the customer."
-                            },
-                            {
-                                "name": "billingPeriod",
-                                "type": "integer",
-                                "description": "The billing period."
-                            },
-                            {
-                                "name": "billingPeriodUnit",
+                                "name": "phoneNumber",
                                 "type": "string",
-                                "description": "The unit of the billing period."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             },
                             {
-                                "name": "setupFee",
-                                "type": "number",
-                                "description": "The initial fee charged at the beginning of the subscription."
-                            },
-                            {
-                                "name": "trialPeriod",
-                                "type": "integer",
-                                "description": "The trial period."
-                            },
-                            {
-                                "name": "trialPeriodUnit",
+                                "name": "addressLine1",
                                 "type": "string",
-                                "description": "The unit of the trial period."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             },
                             {
-                                "name": "term",
-                                "type": "integer",
-                                "description": "The term."
-                            },
-                            {
-                                "name": "termUnit",
+                                "name": "addressLine2",
                                 "type": "string",
-                                "description": "The unit of the term."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             },
                             {
-                                "name": "renews",
-                                "type": "boolean",
-                                "description": "Determines whether the subscription will be renewed or expired after the term ends."
-                            },
-                            {
-                                "name": "startsAt",
+                                "name": "city",
                                 "type": "string",
-                                "description": "The requested time when the subscription starts, expressed in UTC format. This attribute is a guideline to Hubble. The actual activation time may be delayed by a few seconds to minutes."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             },
                             {
-                                "name": "activatedAt",
+                                "name": "state",
                                 "type": "string",
-                                "description": "The time when Hubble activated the subscription, expressed in UTC format."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             },
                             {
-                                "name": "cancelledAt",
+                                "name": "country",
                                 "type": "string",
-                                "description": "The time when the subscription was canclled, expressed in UTC format."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             },
                             {
-                                "name": "pausedAt",
+                                "name": "zipCode",
                                 "type": "string",
-                                "description": "The time when the subscription was paused, expressed in UTC format."
-                            },
-                            {
-                                "name": "currentPeriodStart",
-                                "type": "string",
-                                "description": "The time when the current period started, expressed in UTC format."
-                            },
-                            {
-                                "name": "currentPeriodEnd",
-                                "type": "string",
-                                "description": "The time when the current period ends, expressed in UTC format."
-                            },
-                            {
-                                "name": "createdAt",
-                                "type": "string",
-                                "description": "The time when the subscription was created, expressed in UTC format."
-                            },
-                            {
-                                "name": "updatedAt",
-                                "type": "string",
-                                "description": "The time when the subscription was last updated, expressed in UTC format."
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
                             }
                         ]
+                    },
+                    {
+                        "title": "Response",
+                        "description": "Returns the newly created account object. Please see the account object schema section for more information.",
+                        "items": []
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "id": "transactions",
-        "title": "Transactions",
-        "description": "A transaction includes the billing information of a customer and the amount of money to be charged, voided, or refunded.",
-        "snippetTitle": "ENDPOINTS",
-        "snippetContent": "```\nPOST /transactions\nGET /transactions\nGET /transactions/:id\nPUT /transactions/:id\n```",
-        "sections": [
+            },
             {
-                "title": "Transaction Object Schema",
-                "content": "All the transaction endpoints adhere to the schema described here.",
-                "generalSnippet": true,
-                "snippetTitle": "SAMPLE TRANSACTION OBJECT",
+                "title": "Fetch account",
+                "content": "You can retrieve an account from the `GET /accounts/:id` endpoint.",
                 "snippets": [
                     {
-                        "language": null,
-                        "content": "```json\n{\r\n    \"id\": \"5f5cd455cca2c3110c3da225\",\r\n    \"amount\": 1000,\r\n    \"tax\": 300,\r\n    \"comments\": \"This is a sample comment.\",\r\n    \"action\": \"purchase\",\r\n    \"referenceId\": \"5f562badf9337e1bdf1d06c2\",\r\n    \"paymentMethod\": \"cash\",\r\n    \"ownerId\": \"5f524647e71efd182a26692a\",\r\n    \"createdAt\": \"2020-09-12T13:59:49.023Z\"\r\n}\n```"
+                        "title": "SAMPLE REQUEST",
+                        "general": false,
+                        "variants": [
+                            {
+                                "language": "curl",
+                                "content": "```bash\ncurl -X GET https://api.hubblesuite.com/accounts/5f6190b1966a8f0fd205a00a \\\n-H \"Authorization: Bearer <API_KEY>\"\n```"
+                            }
+                        ]
+                    },
+                    {
+                        "general": true,
+                        "title": "SAMPLE RESPONSE",
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"id\": \"5f6190b1966a8f0fd205a00a\",\r\n    \"subscriptionIds\": [],\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #193, JVM Residency\",\r\n    \"addressLine2\": \"19th Cross, JS Town\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560033\",\r\n    \"createdAt\": \"2020-09-16T04:12:33.784Z\",\r\n    \"updatedAt\": \"2020-09-16T04:12:33.784Z\"\r\n}\n```"
+                            }
+                        ]
                     }
                 ],
                 "formats": [
                     {
-                        "title": "Attributes",
+                        "title": "Request",
                         "description": "",
                         "items": [
                             {
                                 "name": "id",
                                 "type": "string",
-                                "description": "A string of 24 hexadecimal digits that uniquely identifies the transaction across Hubble Subscriptions. It cannot be generated by the client."
-                            },
-                            {
-                                "name": "amount",
-                                "type": "number",
-                                "description": "The amount of money involved in this transaction."
-                            },
-                            {
-                                "name": "tax",
-                                "type": "number",
-                                "description": "The tax applied to this transaction."
-                            },
-                            {
-                                "name": "comments",
-                                "type": "string",
-                                "description": "The comments on this transaction."
-                            },
-                            {
-                                "name": "action",
-                                "type": "string",
-                                "description": "Type type of transaction. It can be one of: `purchase`, `refund`, and `verify`."
-                            },
-                            {
-                                "name": "referenceId",
-                                "type": "string",
-                                "description": "A string of 24 hexadecimal digits that identifies the object associated with this transaction."
-                            },
-                            {
-                                "name": "paymentMethod",
-                                "type": "string",
-                                "description": "The payment method used to transact the money. It can be one of: `cash`, `credit_card`, `debit_card`, and `online`."
-                            },
-                            {
-                                "name": "createdAt",
-                                "type": "string",
-                                "description": "The time when the transaction was created, expressed in UTC format."
-                            },
-                            {
-                                "name": "updatedAt",
-                                "type": "string",
-                                "description": "The time when the transaction was last updated, expressed in UTC format."
+                                "required": true,
+                                "description": "A string of 24 hexadecimal digits that identifies the account."
                             }
                         ]
+                    },
+                    {
+                        "title": "Response",
+                        "description": "Returns the requested account object. Please see the account object schema section for more information.",
+                        "items": []
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "id": "plans",
-        "title": "Plans",
-        "description": "A plan is a blueprint for a subscription. It tells Hubble how often and how much to charge your subscribers. Plans can include free trials, add-ons, setup fees, and much more.",
-        "snippetTitle": "ENDPOINTS",
-        "snippetContent": "```\nPOST /plans\nGET /plans\nGET /plans/:id\n```",
-        "sections": [
+            },
             {
-                "title": "Plan Object Schema",
-                "content": "All the plan endpoints adhere to the schema described here.",
-                "generalSnippet": true,
-                "snippetTitle": "SAMPLE SUBSCRIPTION OBJECT",
+                "title": "List accounts",
+                "content": "You can list accounts using the `GET /accounts` endpoint.",
                 "snippets": [
                     {
-                        "language": null,
-                        "content": "```json\n{\r\n    \"id\": \"5f5630036bd8a024377357fa\",\r\n    \"setupFee\": 2000,\r\n    \"trialPeriod\": 30,\r\n    \"trialPeriodUnit\": \"days\",\r\n    \"term\": 360,\r\n    \"termUnit\": \"days\",\r\n    \"renews\": true,\r\n    \"name\": \"Enterprise\",\r\n    \"code\": \"entr\",\r\n    \"description\": \"This is a sample plan.\",\r\n    \"billingPeriod\": 30,\r\n    \"billingPeriodUnit\": \"days\",\r\n    \"pricePerBillingPeriod\": 10000,\r\n    \"ownerId\": \"5f524647e71efd182a26692a\",\r\n    \"createdAt\": \"2020-09-07T13:05:07.521Z\",\r\n    \"updatedAt\": \"2020-09-07T13:05:07.521Z\"\r\n}\n```"
+                        "title": "SAMPLE REQUEST",
+                        "general": false,
+                        "variants": [
+                            {
+                                "language": "curl",
+                                "content": "```bash\ncurl -X GET https://api.hubblesuite.com/accounts?page=0&limit=10 \\\n-H \"Authorization: Bearer <API_KEY>\"\n```"
+                            }
+                        ]
+                    },
+                    {
+                        "general": true,
+                        "title": "SAMPLE RESPONSE",
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"totalRecords\": 200,\r\n    \"page\": 0,\r\n    \"limit\": 10,\r\n    \"totalPages\": 20,\r\n    \"previousPage\": null,\r\n    \"nextPage\": 1,\r\n    \"records\": [\r\n        {\r\n            \"id\": \"5f6190b1966a8f0fd205a00a\",\r\n            \"subscriptionIds\": [],\r\n            \"userName\": \"anushka\",\r\n            \"firstName\": \"Anushka\",\r\n            \"lastName\": \"Madyanam\",\r\n            \"emailAddress\": \"anushka@hubblesuite.com\",\r\n            \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n            \"addressLine1\": \"Flat #193, JVM Residency\",\r\n            \"addressLine2\": \"19th Cross, JS Town\",\r\n            \"city\": \"Bengaluru\",\r\n            \"state\": \"Karnataka\",\r\n            \"country\": \"India\",\r\n            \"zipCode\": \"560033\",\r\n            \"createdAt\": \"2020-09-16T04:12:33.784Z\",\r\n            \"updatedAt\": \"2020-09-16T04:12:33.784Z\"\r\n        },\r\n        ...\r\n    ]\r\n}\n```"
+                            }
+                        ]
                     }
                 ],
                 "formats": [
                     {
-                        "title": "Attributes",
+                        "title": "Request",
                         "description": "",
                         "items": [
                             {
                                 "name": "id",
                                 "type": "string",
-                                "description": "A string of 24 hexadecimal digits that uniquely identifies the plan across Hubble Subscriptions. It cannot be generated by the client."
-                            },
-                            {
-                                "name": "name",
-                                "type": "string",
-                                "description": "The name of the plan."
-                            },
-                            {
-                                "name": "code",
-                                "type": "string",
-                                "description": "The code name of the plan. It should be unique within your organization."
-                            },
-                            {
-                                "name": "description",
-                                "type": "string",
-                                "description": "A brief description of the plan."
-                            },
-                            {
-                                "name": "billingPeriod",
-                                "type": "string",
-                                "description": "The billing period of the plan."
-                            },
-                            {
-                                "name": "billingPeriodUnit",
-                                "type": "string",
-                                "description": "The unit of the billing period."
-                            },
-                            {
-                                "name": "pricePerBillingPeriod",
-                                "type": "string",
-                                "description": "The price charged per billing period."
-                            },
-                            {
-                                "name": "setupFee",
-                                "type": "string",
-                                "description": "The initial fee charged at the beginning of the subscription."
-                            },
-                            {
-                                "name": "trialPeriod",
-                                "type": "string",
-                                "description": "The trial period."
-                            },
-                            {
-                                "name": "trialPeriodUnit",
-                                "type": "string",
-                                "description": "The unit of the trial period."
-                            },
-                            {
-                                "name": "term",
-                                "type": "integer",
-                                "description": "The term of the subscription."
-                            },
-                            {
-                                "name": "termUnit",
-                                "type": "string",
-                                "description": "The unit of the term."
-                            },
-                            {
-                                "name": "renews",
-                                "type": "boolean",
-                                "description": "Determines whether the subscription will be renewed or expired after the term ends."
-                            },
-                            {
-                                "name": "createdAt",
-                                "type": "string",
-                                "description": "The time when the plan was created, expressed in UTC format."
-                            },
-                            {
-                                "name": "updatedAt",
-                                "type": "string",
-                                "description": "The time when the plan was last updated, expressed in UTC format."
+                                "required": true,
+                                "description": "A string of 24 hexadecimal digits that identifies the account."
                             }
                         ]
+                    },
+                    {
+                        "title": "Response",
+                        "description": "Returns the requested account object. Please see the account object schema section for more information.",
+                        "items": []
+                    }
+                ]
+            },
+            {
+                "title": "Update account",
+                "content": "You can update an account at the `PUT /accounts/:id` endpoint.",
+                "snippets": [
+                    {
+                        "title": "SAMPLE REQUEST",
+                        "general": false,
+                        "variants": [
+                            {
+                                "language": "curl",
+                                "content": "```bash\ndata=\\\r\n'{\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #118, V8 Residency\",\r\n    \"addressLine2\": \"16th Cross, NG Road\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560005\"\r\n}'\r\necho $data | curl -X POST https://api.hubblesuite.com/accounts/5f6190b1966a8f0fd205a00a \\\r\n-H \"Authorization: Bearer <API_KEY>\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d @-\n```"
+                            }
+                        ]
+                    },
+                    {
+                        "general": true,
+                        "title": "SAMPLE RESPONSE",
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"id\": \"5f6190b1966a8f0fd205a00a\",\r\n    \"subscriptionIds\": [],\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #118, V8 Residency\",\r\n    \"addressLine2\": \"16th Cross, NG Road\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560005\",\r\n    \"createdAt\": \"2020-09-16T04:12:33.784Z\",\r\n    \"updatedAt\": \"2020-10-16T04:12:33.784Z\"\r\n}\n```"
+                            }
+                        ]
+                    }
+                ],
+                "formats": [
+                    {
+                        "title": "Request",
+                        "description": "",
+                        "items": [
+                            {
+                                "name": "id",
+                                "type": "string",
+                                "required": true,
+                                "description": "A string of 24 hexadecimal digits that identifies the account."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Response",
+                        "description": "Returns the requested account object. Please see the account object schema section for more information.",
+                        "items": []
                     }
                 ]
             }
