@@ -155,7 +155,8 @@ const groups = [
             {
                 id: "pricing",
                 title: "Pricing",
-                url: "/pricing",
+                url: `${process.env.REACT_APP_WEBSITE_URL}/pricing`,
+                external: true,
             },
             /*{
                 'id'   : 'use-cases',
@@ -180,7 +181,8 @@ const groups = [
             {
                 id: "faqs",
                 title: "FAQs",
-                url: "/faqs",
+                url: `${process.env.REACT_APP_WEBSITE_URL}/faqs`,
+                external: true,
             } /*
             {
                 'id'   : 'research',

@@ -4,7 +4,7 @@
         "title": "Introduction",
         "description": "The Hubble API lets you view and manage data like accounts, subscriptions, invoices, transactions, and plans.\n\nThe Hubble API is basically a REST API. It has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.",
         "snippetTitle": "BASE URL",
-        "snippetContent": "https://api.hubblesuite.com",
+        "snippetContent": "https://api.hubblesuite.com/v1",
         "sections": [
             {
                 "title": "Authentication",
@@ -219,7 +219,7 @@
                         "variants": [
                             {
                                 "language": "curl",
-                                "content": "```bash\ndata=\\\r\n'{\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #193, JVM Residency\",\r\n    \"addressLine2\": \"19th Cross, JS Town\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560033\"\r\n}'\r\necho $data | curl -X POST https://api.hubblesuite.com/accounts \\\r\n-H \"Authorization: Bearer <API_KEY>\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d @-\n```"
+                                "content": "```bash\ndata=\\\r\n'{\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #193, JVM Residency\",\r\n    \"addressLine2\": \"19th Cross, JS Town\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560033\"\r\n}'\r\necho $data | curl -X POST https://api.hubblesuite.com/v1/accounts \\\r\n-H \"Authorization: Bearer <API_KEY>\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d @-\n```"
                             }
                         ]
                     },
@@ -313,7 +313,7 @@
                         "variants": [
                             {
                                 "language": "curl",
-                                "content": "```bash\ncurl -X GET https://api.hubblesuite.com/accounts/5f6190b1966a8f0fd205a00a \\\n-H \"Authorization: Bearer <API_KEY>\"\n```"
+                                "content": "```bash\ncurl -X GET https://api.hubblesuite.com/v1/accounts/5f6190b1966a8f0fd205a00a \\\n-H \"Authorization: Bearer <API_KEY>\"\n```"
                             }
                         ]
                     },
@@ -358,7 +358,7 @@
                         "variants": [
                             {
                                 "language": "curl",
-                                "content": "```bash\ncurl -X GET https://api.hubblesuite.com/accounts?page=0&limit=10 \\\n-H \"Authorization: Bearer <API_KEY>\"\n```"
+                                "content": "```bash\ncurl -X GET https://api.hubblesuite.com/v1/accounts?page=0&limit=10&date_range=last_3_months \\\n-H \"Authorization: Bearer <API_KEY>\"\n```"
                             }
                         ]
                     },
@@ -379,17 +379,77 @@
                         "description": "",
                         "items": [
                             {
-                                "name": "id",
+                                "name": "page",
+                                "type": "integer",
+                                "required": false,
+                                "description": "The number of the page you want to retrieve. It is zero based. The first page is at 0, the second at 1, and so on. The default value is 0."
+                            },
+                            {
+                                "name": "limit",
+                                "type": "integer",
+                                "required": false,
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100. The default value is 10."
+                            },
+                            {
+                                "name": "date_range",
                                 "type": "string",
-                                "required": true,
-                                "description": "A string of 24 hexadecimal digits that identifies the account."
+                                "required": false,
+                                "description": "Filter plans based on the period in which the plan was created.\n\nYou can specify one of the following values.\n * **all_time**  \nAll the records are selected regardless of when they were created. When the `date_range` parameter is not specified, the default value is `all_time`.\n * **last_3_months**  \nSelect records that were created in the last three months, includes today.\n * **last_6_months**  \nSelect records that were created in the last six months, includes today.\n * **last_9_months**  \nSelect records that were created in the last nine months, includes today.\n * **last_12_months**  \nSelect records that were created in the last twelve months, includes today.\n * **last_15_months**  \nSelect records that were created in the last fifteen months, includes today.\n * **last_18_months**  \nSelect records that were created in the last eighteen months, includes today.\n * **custom**  \nSelect records that were created in the range specified by the `start_date` and `end_date` parameters."
+                            },
+                            {
+                                "name": "start_date",
+                                "type": "string",
+                                "required": false,
+                                "description": "The start date of the date range. It is inclusive and mandatory when `date_range` is assigned `custom`. Both the UTC format and the UNIX epoch time are supported."
+                            },
+                            {
+                                "name": "end_date",
+                                "type": "string",
+                                "required": false,
+                                "description": "The end date of the date range. It is inclusive and mandatory when `date_range` is assigned `custom`. Both the UTC format and the UNIX epoch time are supported."
                             }
                         ]
                     },
                     {
                         "title": "Response",
-                        "description": "Returns the requested account object. Please see the account object schema section for more information.",
-                        "items": []
+                        "description": "Returns the requested account objects.",
+                        "items": [
+                            {
+                                "name": "page",
+                                "type": "integer",
+                                "description": "The current page number. It is zero based. The first page is at 0, the second at 1, and so on."
+                            },
+                            {
+                                "name": "totalRecords",
+                                "type": "integer",
+                                "description": "The total number of records."
+                            },
+                            {
+                                "name": "limit",
+                                "type": "integer",
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
+                            },
+                            {
+                                "name": "totalPages",
+                                "type": "integer",
+                                "description": "The total number of pages based on `limit` and `totalRecords`."
+                            },
+                            {
+                                "name": "previousPage",
+                                "type": "integer",
+                                "description": "The previous zero based page number, if any. Otherwise it is `null`."
+                            },
+                            {
+                                "name": "nextPage",
+                                "type": "integer",
+                                "description": "The next zero based page number, if any. Otherwise it is `null`."
+                            },
+                            {
+                                "name": "records",
+                                "type": "array",
+                                "description": "An array of records you requested. Please see the account object schema section for more information."
+                            }
+                        ]
                     }
                 ]
             },
@@ -403,7 +463,7 @@
                         "variants": [
                             {
                                 "language": "curl",
-                                "content": "```bash\ndata=\\\r\n'{\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #118, V8 Residency\",\r\n    \"addressLine2\": \"16th Cross, NG Road\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560005\"\r\n}'\r\necho $data | curl -X POST https://api.hubblesuite.com/accounts/5f6190b1966a8f0fd205a00a \\\r\n-H \"Authorization: Bearer <API_KEY>\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d @-\n```"
+                                "content": "```bash\ndata=\\\r\n'{\r\n    \"userName\": \"anushka\",\r\n    \"firstName\": \"Anushka\",\r\n    \"lastName\": \"Madyanam\",\r\n    \"emailAddress\": \"anushka@hubblesuite.com\",\r\n    \"phoneNumber\": \"+91 XXXXXXXXXX\",\r\n    \"addressLine1\": \"Flat #118, V8 Residency\",\r\n    \"addressLine2\": \"16th Cross, NG Road\",\r\n    \"city\": \"Bengaluru\",\r\n    \"state\": \"Karnataka\",\r\n    \"country\": \"India\",\r\n    \"zipCode\": \"560005\"\r\n}'\r\necho $data | curl -X PUT https://api.hubblesuite.com/v1/accounts/5f6190b1966a8f0fd205a00a \\\r\n-H \"Authorization: Bearer <API_KEY>\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d @-\n```"
                             }
                         ]
                     },
@@ -435,6 +495,358 @@
                         "title": "Response",
                         "description": "Returns the requested account object. Please see the account object schema section for more information.",
                         "items": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "plans",
+        "title": "Plans",
+        "description": "A plan is a blueprint for a subscription. It tells Hubble how often and how much to charge your subscribers. Plans can include free trials, add-ons, setup fees, and much more.",
+        "snippetTitle": "ENDPOINTS",
+        "snippetContent": "```\nPOST /plans\nGET /plans\nGET /plans/:id\n```",
+        "sections": [
+            {
+                "title": "Plan Object Schema",
+                "content": "All the plan endpoints adhere to the schema described here.",
+                "snippets": [
+                    {
+                        "general": true,
+                        "title": "SAMPLE SUBSCRIPTION OBJECT",
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"id\": \"5f5630036bd8a024377357fa\",\r\n    \"setupFee\": 2000,\r\n    \"trialPeriod\": 30,\r\n    \"trialPeriodUnit\": \"days\",\r\n    \"term\": 360,\r\n    \"termUnit\": \"days\",\r\n    \"renews\": true,\r\n    \"name\": \"Enterprise\",\r\n    \"code\": \"entr\",\r\n    \"description\": \"This is a sample plan.\",\r\n    \"billingPeriod\": 30,\r\n    \"billingPeriodUnit\": \"days\",\r\n    \"pricePerBillingPeriod\": 10000,\r\n    \"ownerId\": \"5f524647e71efd182a26692a\",\r\n    \"createdAt\": \"2020-09-07T13:05:07.521Z\",\r\n    \"updatedAt\": \"2020-09-07T13:05:07.521Z\"\r\n}\n```"
+                            }
+                        ]
+                    }
+                ],
+                "formats": [
+                    {
+                        "title": "Attributes",
+                        "description": "",
+                        "items": [
+                            {
+                                "name": "id",
+                                "type": "string",
+                                "description": "A string of 24 hexadecimal digits that uniquely identifies the plan across Hubble Subscriptions. It cannot be generated by the client."
+                            },
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "description": "The name of the plan."
+                            },
+                            {
+                                "name": "code",
+                                "type": "string",
+                                "description": "The code name of the plan. It should be unique within your organization."
+                            },
+                            {
+                                "name": "description",
+                                "type": "string",
+                                "description": "A brief description of the plan."
+                            },
+                            {
+                                "name": "billingPeriod",
+                                "type": "string",
+                                "description": "The billing period of the plan."
+                            },
+                            {
+                                "name": "billingPeriodUnit",
+                                "type": "string",
+                                "description": "The unit of the billing period."
+                            },
+                            {
+                                "name": "pricePerBillingPeriod",
+                                "type": "string",
+                                "description": "The price charged per billing period."
+                            },
+                            {
+                                "name": "setupFee",
+                                "type": "string",
+                                "description": "The initial fee charged at the beginning of the subscription."
+                            },
+                            {
+                                "name": "trialPeriod",
+                                "type": "string",
+                                "description": "The trial period."
+                            },
+                            {
+                                "name": "trialPeriodUnit",
+                                "type": "string",
+                                "description": "The unit of the trial period."
+                            },
+                            {
+                                "name": "term",
+                                "type": "integer",
+                                "description": "The term of the subscription."
+                            },
+                            {
+                                "name": "termUnit",
+                                "type": "string",
+                                "description": "The unit of the term."
+                            },
+                            {
+                                "name": "renews",
+                                "type": "boolean",
+                                "description": "Determines whether the subscription will be renewed or expired after the term ends."
+                            },
+                            {
+                                "name": "createdAt",
+                                "type": "string",
+                                "description": "The time when the plan was created, expressed in UTC format."
+                            },
+                            {
+                                "name": "updatedAt",
+                                "type": "string",
+                                "description": "The time when the plan was last updated, expressed in UTC format."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "Create plan",
+                "content": "You can create a new plan at the `POST /plans` endpoint.",
+                "snippets": [
+                    {
+                        "title": "SAMPLE REQUEST",
+                        "general": false,
+                        "variants": [
+                            {
+                                "language": "curl",
+                                "content": "```bash\ndata=\\\r\n'{\r\n    \"name\": \"Enterprise\",\r\n    \"code\": \"entr\",\r\n    \"description\": \"This is a sample plan.\",\r\n    \"billingPeriod\": 30,\r\n    \"billingPeriodUnit\": \"days\",\r\n    \"pricePerBillingPeriod\": 10000,\r\n    \"setupFee\": 2000,\r\n    \"trialPeriod\": 30,\r\n    \"trialPeriodUnit\": \"days\",\r\n    \"term\": 360,\r\n    \"termUnit\": \"days\",\r\n    \"renews\": true\r\n}'\r\necho $data | curl -X POST https://api.hubblesuite.com/v1/plans \\\r\n-H \"Authorization: Bearer <API_KEY>\" \\\r\n-H \"Content-Type: application/json\" \\\r\n-d @-\n```"
+                            }
+                        ]
+                    },
+                    {
+                        "general": true,
+                        "title": "SAMPLE RESPONSE",
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"id\": \"5f5630036bd8a024377357fa\",\r\n    \"setupFee\": 2000,\r\n    \"trialPeriod\": 30,\r\n    \"trialPeriodUnit\": \"days\",\r\n    \"term\": 360,\r\n    \"termUnit\": \"days\",\r\n    \"renews\": true,\r\n    \"name\": \"Enterprise\",\r\n    \"code\": \"entr\",\r\n    \"description\": \"This is a sample plan.\",\r\n    \"billingPeriod\": 30,\r\n    \"billingPeriodUnit\": \"days\",\r\n    \"pricePerBillingPeriod\": 10000,\r\n    \"ownerId\": \"5f524647e71efd182a26692a\",\r\n    \"createdAt\": \"2020-09-07T13:05:07.521Z\",\r\n    \"updatedAt\": \"2020-09-07T13:05:07.521Z\"\r\n}\n```"
+                            }
+                        ]
+                    }
+                ],
+                "formats": [
+                    {
+                        "title": "Request",
+                        "description": "",
+                        "items": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "description": "The name of the plan."
+                            },
+                            {
+                                "name": "code",
+                                "type": "string",
+                                "description": "The code name of the plan. It should be unique within your organization."
+                            },
+                            {
+                                "name": "description",
+                                "type": "string",
+                                "description": "A brief description of the plan."
+                            },
+                            {
+                                "name": "billingPeriod",
+                                "type": "string",
+                                "description": "The billing period of the plan."
+                            },
+                            {
+                                "name": "billingPeriodUnit",
+                                "type": "string",
+                                "description": "The unit of the billing period."
+                            },
+                            {
+                                "name": "pricePerBillingPeriod",
+                                "type": "string",
+                                "description": "The price charged per billing period."
+                            },
+                            {
+                                "name": "setupFee",
+                                "type": "string",
+                                "description": "The initial fee charged at the beginning of the subscription."
+                            },
+                            {
+                                "name": "trialPeriod",
+                                "type": "string",
+                                "description": "The trial period."
+                            },
+                            {
+                                "name": "trialPeriodUnit",
+                                "type": "string",
+                                "description": "The unit of the trial period."
+                            },
+                            {
+                                "name": "term",
+                                "type": "string",
+                                "description": "The term of the subscription."
+                            },
+                            {
+                                "name": "termUnit",
+                                "type": "string",
+                                "description": "The unit of the term."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Response",
+                        "description": "Returns the newly created plan object. Please see the plan object schema section for more information.",
+                        "items": []
+                    }
+                ]
+            },
+            {
+                "title": "Fetch plan",
+                "content": "You can retrieve a plan from the `GET /plans/:id` endpoint.",
+                "snippets": [
+                    {
+                        "title": "SAMPLE REQUEST",
+                        "general": false,
+                        "variants": [
+                            {
+                                "language": "curl",
+                                "content": "```bash\ncurl -X GET https://api.hubblesuite.com/v1/plans/5f5630036bd8a024377357fa \\\n-H \"Authorization: Bearer <API_KEY>\"\n```"
+                            }
+                        ]
+                    },
+                    {
+                        "general": true,
+                        "title": "SAMPLE RESPONSE",
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"id\": \"5f5630036bd8a024377357fa\",\r\n    \"setupFee\": 2000,\r\n    \"trialPeriod\": 30,\r\n    \"trialPeriodUnit\": \"days\",\r\n    \"term\": 360,\r\n    \"termUnit\": \"days\",\r\n    \"renews\": true,\r\n    \"name\": \"Enterprise\",\r\n    \"code\": \"entr\",\r\n    \"description\": \"This is a sample plan.\",\r\n    \"billingPeriod\": 30,\r\n    \"billingPeriodUnit\": \"days\",\r\n    \"pricePerBillingPeriod\": 10000,\r\n    \"ownerId\": \"5f524647e71efd182a26692a\",\r\n    \"createdAt\": \"2020-09-07T13:05:07.521Z\",\r\n    \"updatedAt\": \"2020-09-07T13:05:07.521Z\"\r\n}\n```"
+                            }
+                        ]
+                    }
+                ],
+                "formats": [
+                    {
+                        "title": "Request",
+                        "description": "",
+                        "items": [
+                            {
+                                "name": "id",
+                                "type": "string",
+                                "required": true,
+                                "description": "A string of 24 hexadecimal digits that identifies the plan."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Response",
+                        "description": "Returns the requested plan object. Please see the plan object schema section for more information.",
+                        "items": []
+                    }
+                ]
+            },
+            {
+                "title": "List plans",
+                "content": "You can list plans using the `GET /plans` endpoint.",
+                "snippets": [
+                    {
+                        "title": "SAMPLE REQUEST",
+                        "general": false,
+                        "variants": [
+                            {
+                                "language": "curl",
+                                "content": "```bash\ncurl -X GET https://api.hubblesuite.com/v1/plans?page=0&limit=10&date_range=last_3_months \\\n-H \"Authorization: Bearer <API_KEY>\"\n```"
+                            }
+                        ]
+                    },
+                    {
+                        "general": true,
+                        "title": "SAMPLE RESPONSE",
+                        "variants": [
+                            {
+                                "language": null,
+                                "content": "```json\n{\r\n    \"totalRecords\": 20,\r\n    \"page\": 0,\r\n    \"limit\": 10,\r\n    \"totalPages\": 2,\r\n    \"previousPage\": null,\r\n    \"nextPage\": 1,\r\n    \"records\": [\r\n        {\r\n            \"id\": \"5f5630036bd8a024377357fa\",\r\n            \"setupFee\": 2000,\r\n            \"trialPeriod\": 30,\r\n            \"trialPeriodUnit\": \"days\",\r\n            \"term\": 360,\r\n            \"termUnit\": \"days\",\r\n            \"renews\": true,\r\n            \"name\": \"Enterprise\",\r\n            \"code\": \"entr\",\r\n            \"description\": \"This is a sample plan.\",\r\n            \"billingPeriod\": 30,\r\n            \"billingPeriodUnit\": \"days\",\r\n            \"pricePerBillingPeriod\": 10000,\r\n            \"ownerId\": \"5f524647e71efd182a26692a\",\r\n            \"createdAt\": \"2020-09-07T13:05:07.521Z\",\r\n            \"updatedAt\": \"2020-09-07T13:05:07.521Z\"\r\n        },\r\n        ...\r\n    ]\r\n}\n```"
+                            }
+                        ]
+                    }
+                ],
+                "formats": [
+                    {
+                        "title": "Request",
+                        "description": "",
+                        "items": [
+                            {
+                                "name": "page",
+                                "type": "integer",
+                                "required": false,
+                                "description": "The number of the page you want to retrieve. It is zero based. The first page is at 0, the second at 1, and so on. The default value is 0."
+                            },
+                            {
+                                "name": "limit",
+                                "type": "integer",
+                                "required": false,
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100. The default value is 10."
+                            },
+                            {
+                                "name": "date_range",
+                                "type": "string",
+                                "required": false,
+                                "description": "Filter plans based on the period in which the plan was created.\n\nYou can specify one of the following values.\n * **all_time**  \nAll the records are selected regardless of when they were created. When the `date_range` parameter is not specified, the default value is `all_time`.\n * **last_3_months**  \nSelect records that were created in the last three months, includes today.\n * **last_6_months**  \nSelect records that were created in the last six months, includes today.\n * **last_9_months**  \nSelect records that were created in the last nine months, includes today.\n * **last_12_months**  \nSelect records that were created in the last twelve months, includes today.\n * **last_15_months**  \nSelect records that were created in the last fifteen months, includes today.\n * **last_18_months**  \nSelect records that were created in the last eighteen months, includes today.\n * **custom**  \nSelect records that were created in the range specified by the `start_date` and `end_date` parameters."
+                            },
+                            {
+                                "name": "start_date",
+                                "type": "string",
+                                "required": false,
+                                "description": "The start date of the date range. It is inclusive and mandatory when `date_range` is assigned `custom`. Both the UTC format and the UNIX epoch time are supported."
+                            },
+                            {
+                                "name": "end_date",
+                                "type": "string",
+                                "required": false,
+                                "description": "The end date of the date range. It is inclusive and mandatory when `date_range` is assigned `custom`. Both the UTC format and the UNIX epoch time are supported."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Response",
+                        "description": "Returns the requested plan objects.",
+                        "items": [
+                            {
+                                "name": "page",
+                                "type": "integer",
+                                "description": "The current page number. It is zero based. The first page is at 0, the second at 1, and so on."
+                            },
+                            {
+                                "name": "totalRecords",
+                                "type": "integer",
+                                "description": "The total number of records."
+                            },
+                            {
+                                "name": "limit",
+                                "type": "integer",
+                                "description": "The maximum number of records you want to retrieve, between 10 and 100."
+                            },
+                            {
+                                "name": "totalPages",
+                                "type": "integer",
+                                "description": "The total number of pages based on `limit` and `totalRecords`."
+                            },
+                            {
+                                "name": "previousPage",
+                                "type": "integer",
+                                "description": "The previous zero based page number, if any. Otherwise it is `null`."
+                            },
+                            {
+                                "name": "nextPage",
+                                "type": "integer",
+                                "description": "The next zero based page number, if any. Otherwise it is `null`."
+                            },
+                            {
+                                "name": "records",
+                                "type": "array",
+                                "description": "An array of records you requested. Please see the plan object schema section for more information."
+                            }
+                        ]
                     }
                 ]
             }
