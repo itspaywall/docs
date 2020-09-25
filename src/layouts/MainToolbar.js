@@ -35,12 +35,12 @@ const useStyles = makeStyles((theme) => ({
 const links = [
     {
         id: "apiReference",
-        title: "API Reference",
+        title: "API REFERENCE",
         url: "/api",
     },
     {
         id: "guides",
-        title: "Guides",
+        title: "GUIDES",
         url: "/guides",
     },
 ];
