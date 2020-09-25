@@ -1,5 +1,6 @@
 {
     "name": "hubble-docs",
+    "homepage": "https://docs.hubblesuite.com/",
     "version": "0.1.0",
     "private": true,
     "dependencies": {

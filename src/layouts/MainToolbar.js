@@ -49,6 +49,7 @@ function MainToolbar(props) {
     const classes = useStyles();
     const history = useHistory();
     const handleLink = (url) => () => history.push(url);
+    const handleExternalLink = (url) => () => (window.location = url);
 
     return (
         <AppBar position="fixed" className={clsx(classes.appBar)}>
@@ -56,7 +57,9 @@ function MainToolbar(props) {
                 <Box display="flex" flexGrow={1}>
                     <Button
                         className={classes.logoButton}
-                        onClick={handleLink("/index")}
+                        onClick={handleExternalLink(
+                            `${process.env.REACT_APP_WEBSITE_URL}/index`
+                        )}
                     >
                         <img
                             src="assets/images/hubble.png"
@@ -76,7 +79,9 @@ function MainToolbar(props) {
                 </Box>
                 <Button
                     className={classes.action}
-                    onClick={handleLink("/login")}
+                    onClick={handleExternalLink(
+                        `${process.env.REACT_APP_WEBSITE_URL}/login`
+                    )}
                 >
                     LOGIN
                 </Button>
@@ -84,7 +89,9 @@ function MainToolbar(props) {
                     className={classes.action}
                     color="primary"
                     variant="contained"
-                    onClick={handleLink("/register")}
+                    onClick={handleExternalLink(
+                        `${process.env.REACT_APP_WEBSITE_URL}/register`
+                    )}
                 >
                     TRY FOR FREE
                 </Button>
