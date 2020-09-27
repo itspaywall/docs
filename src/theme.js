@@ -1,4 +1,18 @@
 import { createMuiTheme } from "@material-ui/core/styles";
+import hubbleSansSource from "./styles/fonts/Hubble.ttf";
+
+const hubbleSans = {
+    fontFamily: "Hubble",
+    fontStyle: "normal",
+    fontDisplay: "swap",
+    fontWeight: 300,
+    src: `
+      local('Hubble'),
+      url(${hubbleSansSource}) format('truetype')
+    `,
+    unicodeRange:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF",
+};
 
 const theme = createMuiTheme({
     breakpoints: {
@@ -132,9 +146,9 @@ const theme = createMuiTheme({
         fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
         fontSize: 14,
         fontWeightLight: 300,
-        fontWeightRegular: 400,
-        fontWeightMedium: 500,
-        fontWeightBold: 700,
+        fontWeightRegular: 300,
+        fontWeightMedium: 300,
+        fontWeightBold: 300,
         h1: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
             fontWeight: 300,
@@ -151,63 +165,63 @@ const theme = createMuiTheme({
         },
         h3: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 400,
+            fontWeight: 300,
             fontSize: "3rem",
             lineHeight: 1.167,
             letterSpacing: "0em",
         },
         h4: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 400,
+            fontWeight: 300,
             fontSize: "2.125rem",
             lineHeight: 1.235,
             letterSpacing: "0.00735em",
         },
         h5: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 400,
+            fontWeight: 300,
             fontSize: "1.5rem",
             lineHeight: 1.334,
             letterSpacing: "0em",
         },
         h6: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 500,
+            fontWeight: 300,
             fontSize: "1.25rem",
             lineHeight: 1.6,
             letterSpacing: "0.0075em",
         },
         subtitle1: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 400,
+            fontWeight: 300,
             fontSize: "1rem",
             lineHeight: 1.75,
             letterSpacing: "0.00938em",
         },
         subtitle2: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 500,
+            fontWeight: 300,
             fontSize: "0.875rem",
             lineHeight: 1.57,
             letterSpacing: "0.00714em",
         },
         body1: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 400,
+            fontWeight: 300,
             fontSize: "1rem",
             lineHeight: 1.5,
             letterSpacing: "0.00938em",
         },
         body2: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 400,
+            fontWeight: 300,
             fontSize: "0.875rem",
             lineHeight: 1.43,
             letterSpacing: "0.01071em",
         },
         button: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 500,
+            fontWeight: 300,
             fontSize: "0.875rem",
             lineHeight: 1.75,
             letterSpacing: "0.02857em",
@@ -215,18 +229,25 @@ const theme = createMuiTheme({
         },
         caption: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 400,
+            fontWeight: 300,
             fontSize: "0.75rem",
             lineHeight: 1.66,
             letterSpacing: "0.03333em",
         },
         overline: {
             fontFamily: '"Hubble", "Helvetica", "Arial", sans-serif',
-            fontWeight: 400,
+            fontWeight: 300,
             fontSize: "0.75rem",
             lineHeight: 2.66,
             letterSpacing: "0.08333em",
             textTransform: "uppercase",
+        },
+    },
+    overrides: {
+        MuiCssBaseline: {
+            "@global": {
+                "@font-face": [hubbleSans],
+            },
         },
     },
     shape: { borderRadius: 4 },
