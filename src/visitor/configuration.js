@@ -6,7 +6,11 @@ const configuration = [
         component: React.lazy(() => import("./api/APIReference")),
     },
     {
-        path: "/guides",
+        path: "/guides/:guide/:section",
+        component: React.lazy(() => import("./guides/Guides")),
+    },
+    {
+        path: "/guides/:guide",
         component: React.lazy(() => import("./guides/Guides")),
     },
 ];

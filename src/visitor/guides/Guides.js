@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { withRouter, useHistory } from "react-router-dom";
-import { renderRoutes } from "react-router-config";
+import { useParams, useHistory, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -10,6 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import ReactMarkdown from "react-markdown";
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -55,177 +56,209 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const accounts = [
+const guides = [
     {
-        label: "Create Account",
-        markdown: "/guides/accounts/create-account.md",
-        link: "/guides/accounts/create-account",
+        id: "accounts",
+        markdownURL: "/guides/accounts/accounts.md",
+        sections: [
+            {
+                label: "Create Account",
+                markdownURL: "/guides/accounts/create-account.md",
+                id: "create-account",
+            },
+            {
+                label: "Edit Account",
+                markdownURL: "/guides/accounts/edit-account.md",
+                id: "edit-account",
+            },
+            {
+                label: "Delete Account",
+                markdownURL: "/guides/accounts/delete-account.md",
+                id: "delete-account",
+            },
+        ],
     },
     {
-        label: "Edit Account",
-        markdown: "/guides/accounts/edit-account.md",
-        link: "/guides/accounts/edit-account",
+        id: "subscriptions",
+        markdownURL: "/guides/subscriptions/subscriptions.md",
+        sections: [
+            {
+                label: "Create Subscription",
+                markdownURL: "/guides/subscriptions/create-subscription.md",
+                id: "create-subscription",
+            },
+            {
+                label: "Edit Subscription",
+                markdownURL: "/guides/subscriptions/edit-subscription.md",
+                id: "edit-subscription",
+            },
+            {
+                label: "Delete Subscription",
+                markdownURL: "/guides/subscriptions/delete-subscription.md",
+                id: "delete-subscription",
+            },
+        ],
     },
     {
-        label: "Delete Account",
-        markdown: "/guides/accounts/delete-account.md",
-        link: "/guides/accounts/delete-account",
+        id: "transactions",
+        markdownURL: "/guides/transactions/transactions.md",
+        sections: [
+            {
+                label: "Create Transactions",
+                markdownURL: "/guides/transactions/create-transaction.md",
+                id: "create-transaction",
+            },
+            {
+                label: "Edit Transactions",
+                markdownURL: "/guides/transactions/edit-transaction.md",
+                id: "edit-transaction",
+            },
+            {
+                label: "Delete Transactions",
+                markdownURL: "/guides/transactions/delete-transaction.md",
+                id: "delete-transaction",
+            },
+        ],
+    },
+    {
+        id: "plans",
+        markdownURL: "/guides/plans/plans.md",
+        sections: [
+            {
+                label: "Create Plans",
+                markdownURL: "/guides/plans/create-plan.md",
+                id: "create-plan",
+            },
+            {
+                label: "Edit Plans",
+                markdownURL: "/guides/plans/edit-plan.md",
+                id: "edit-plan",
+            },
+            {
+                label: "Delete Plans",
+                markdownURL: "/guides/plans/delete-plan.md",
+                id: "delete-plan",
+            },
+        ],
+    },
+    {
+        id: "invoices",
+        markdownURL: "/guides/invoices/invoices.md",
+        sections: [
+            {
+                label: "Create Invoice",
+                markdownURL: "/guides/invoices/create-invoice.md",
+                id: "create-invoice",
+            },
+            {
+                label: "Edit Invoice",
+                markdownURL: "/guides/invoices/edit-invoice.md",
+                id: "edit-invoice",
+            },
+            {
+                label: "Delete Invoice",
+                markdownURL: "/guides/invoices/delete-invoice.md",
+                id: "delete-invoice",
+            },
+        ],
     },
 ];
 
-const subscriptions = [
-    {
-        label: "Create Subscription",
-        markdown: "/guides/subscriptions/create-subscription.md",
-        link: "/guides/subscriptions/create-subscription",
-    },
-    {
-        label: "Edit Subscription",
-        markdown: "/guides/subscriptions/edit-subscription.md",
-        link: "/guides/subscriptions/edit-subscription",
-    },
-    {
-        label: "Delete Subscription",
-        markdown: "/guides/subscriptions/delete-subscription.md",
-        link: "/guides/subscriptions/delete-subscription",
-    },
-];
-
-const transactions = [
-    {
-        label: "Create Transactions",
-        markdown: "/guides/transactions/create-transaction.md",
-        link: "/guides/transactions/create-transaction",
-    },
-    {
-        label: "Edit Transactions",
-        markdown: "/guides/transactions/edit-transaction.md",
-        link: "/guides/transactions/edit-transaction",
-    },
-    {
-        label: "Delete Transactions",
-        markdown: "/guides/transactions/delete-transaction.md",
-        link: "/guides/transactions/delete-transaction",
-    },
-];
-
-const plans = [
-    {
-        label: "Create Plans",
-        markdown: "/guides/plans/create-plan.md",
-        link: "/guides/plans/create-plan",
-    },
-    {
-        label: "Edit Plans",
-        markdown: "/guides/plans/edit-plan.md",
-        link: "/guides/plans/edit-plan",
-    },
-    {
-        label: "Delete Plans",
-        markdown: "/guides/plans/delete-plan.md",
-        link: "/guides/plans/delete-plan",
-    },
-];
-
-const invoices = [
-    {
-        label: "Create Invoice",
-        markdown: "/guides/invoices/create-invoice.md",
-        link: "/guides/invoices/create-invoice",
-    },
-    {
-        label: "Edit Invoice",
-        markdown: "/guides/invoices/edit-invoice.md",
-        link: "/guides/invoices/edit-invoice",
-    },
-    {
-        label: "Delete Invoice",
-        markdown: "/guides/invoices/delete-invoice.md",
-        link: "/guides/invoices/delete-invoice",
-    },
-];
-
-function Guide(Page) {
+function Guides(props) {
     const history = useHistory();
-    const [markdown, setMarkdown] = React.useState("");
     const classes = useStyles();
-    const [tabIndex, setValue] = React.useState(0);
+    const [tabIndex, setTabIndex] = React.useState(-1);
+    const { fetchMarkdown, markdown } = props;
+    const { guide: guideId, section: sectionId } = useParams();
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-        load(Page[newValue].markdown);
-        history.push(Page[newValue].link);
-    };
-
-    async function load(file) {
-        const response = await fetch(file);
-        const text = await response.text();
-        setMarkdown(text);
+    const guide = guides.find((guide) => guide.id === guideId);
+    let sectionIndex = -1;
+    if (guide) {
+        if (sectionId) {
+            sectionIndex = guide.sections.findIndex(
+                (section) => section.id === sectionId
+            );
+        }
     }
 
+    const guideMarkdownURL = guide ? guide.markdownURL : null;
+    const guideSections = guide ? guide.sections : null;
+
     useEffect(() => {
-        load(Page[0].markdown);
-    }, []);
+        if (guideId && guide) {
+            if (sectionIndex >= 0) {
+                setTabIndex(sectionIndex);
+                fetchMarkdown(guide.sections[sectionIndex].markdownURL);
+            } else {
+                fetchMarkdown(guideMarkdownURL);
+            }
+        }
+    }, [
+        guideId,
+        sectionId,
+        sectionIndex,
+        setTabIndex,
+        fetchMarkdown,
+        guide,
+        guideMarkdownURL,
+        guideSections,
+    ]);
+
+    if (!guide || (sectionId && sectionIndex < 0)) {
+        return <Redirect to="/error/404" />;
+    }
+
+    const handleTabChange = (event, newTabIndex) => {
+        const section = guide.sections[newTabIndex];
+        history.push(`/guides/${guide.id}/${section.id}`);
+    };
 
     return (
-        <Grid container={true}>
-            <Grid item={true} xs={12} md={2}>
-                <Card variant="outlined" className={classes.card}>
-                    <CardContent className={classes.details}>
-                        <Tabs
-                            orientation="vertical"
-                            variant="fullWidth"
-                            value={tabIndex}
-                            onChange={handleChange}
-                            className={classes.tabs}
-                        >
-                            {Page.map((feature) => (
-                                <Tab label={feature.label} />
-                            ))}
-                        </Tabs>
-                    </CardContent>
-                </Card>
-            </Grid>
-            <Grid item={true} xs={12} md={10}>
-                <TabPanel value={tabIndex} index={0}>
-                    <ReactMarkdown source={markdown} />
-                </TabPanel>
-                <TabPanel value={tabIndex} index={1}>
-                    <ReactMarkdown source={markdown} />
-                </TabPanel>
-                <TabPanel value={tabIndex} index={2}>
-                    <ReactMarkdown source={markdown} />
-                </TabPanel>
-            </Grid>
-        </Grid>
+        <React.Fragment>
+            {markdown && (
+                <Grid container={true}>
+                    <Grid item={true} xs={12} md={2}>
+                        <Card variant="outlined" className={classes.card}>
+                            <CardContent className={classes.details}>
+                                <Tabs
+                                    orientation="vertical"
+                                    variant="fullWidth"
+                                    value={tabIndex}
+                                    onChange={handleTabChange}
+                                    className={classes.tabs}
+                                >
+                                    {guide.sections.map((section) => (
+                                        <Tab label={section.label} />
+                                    ))}
+                                </Tabs>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item={true} xs={12} md={10}>
+                        {guide.sections.map((section, index) => (
+                            <TabPanel value={tabIndex} index={index}>
+                                {tabIndex === index && (
+                                    <ReactMarkdown source={markdown} />
+                                )}
+                            </TabPanel>
+                        ))}
+                        {tabIndex === -1 && <ReactMarkdown source={markdown} />}
+                    </Grid>
+                </Grid>
+            )}
+            {!markdown && "Loading..."}
+        </React.Fragment>
     );
 }
 
-const routes = [
-    {
-        path: "/guides/accounts",
-        component: React.lazy(() => Guide(accounts)),
-    },
-    {
-        path: "/guides/subscriptions",
-        component: React.lazy(() => Guide(subscriptions)),
-    },
-    {
-        path: "/guides/transactions",
-        component: React.lazy(() => Guide(transactions)),
-    },
-    {
-        path: "/guides/plans",
-        component: React.lazy(() => Guide(plans)),
-    },
-    {
-        path: "/guides/invoices",
-        component: React.lazy(() => Guide(invoices)),
-    },
-];
-
-function Guides() {
-    return <div>{renderRoutes(routes)}</div>;
+function mapStateToProps(state) {
+    return {
+        markdown: state.markdown,
+    };
 }
 
-export default withRouter(Guides);
+const mapDispatchToProps = {
+    fetchMarkdown: actions.fetchMarkdown,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Guides);

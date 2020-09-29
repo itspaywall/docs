@@ -63,7 +63,8 @@ const useStyles = makeStyles((theme) => ({
     },
     itemSubtitle: {
         display: "block",
-        fontSize: 12,
+        fontSize: 14,
+        whiteSpace: "normal",
     },
     outer: {
         display: "flex",
@@ -88,35 +89,35 @@ const guides = [
         title: "ACCOUNTS",
         icon: <AccountsIcon />,
         description:
-            "Manage your accounts effortlessly. Read guides on creating, updating and deleting accounts.",
+            "Accounts represent your customer. The accounts dashboard is core to managing your customers. ",
         link: `/guides/accounts`,
     },
     {
         title: "SUBSCRIPTIONS",
         icon: <SubscriptionsIcon />,
         description:
-            "Manage your subscriptions effortlessly. Read guides on creating, updating and deleting subscriptions.",
+            "Subscriptions are created when your customers subscribe to one of your plans.",
         link: `/guides/subscriptions`,
     },
     {
         title: "TRANSACTIONS",
         icon: <TransactionsIcon />,
         description:
-            "Manage your transactions effortlessly. Read guides on creating, updating and deleting transactions.",
+            "Transactions are created when a credit, debit or cash payment is made by your customer.",
         link: `/guides/transactions`,
     },
     {
         title: "PLANS",
         icon: <PlansIcon />,
         description:
-            "Manage your plans effortlessly. Read guides on creating, updating and deleting plans.",
+            "A plan is a blueprint for a subscription. It tells Hubble how often and how much to charge your subscribers. ",
         link: `/guides/plans`,
     },
     {
         title: "INVOICES",
         icon: <InvoicesIcon />,
         description:
-            "Manage your invoices effortlessly. Read guides on creating, updating and deleting invoices.",
+            "All billing events create an invoice automatically. The invoice relates a subscription with a transaction.",
         external: true,
         link: `/guides/invoices`,
     },
@@ -159,8 +160,8 @@ function MainToolbar(props) {
                                         {guide.title}
                                     </Typography>
                                     <Typography
-                                        noWrap={true}
                                         className={classes.itemSubtitle}
+                                        paragraph={true}
                                     >
                                         {guide.description}
                                     </Typography>
