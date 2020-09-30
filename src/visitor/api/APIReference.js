@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
     pageTitle: {
         marginBottom: 8,
-        fontWeight: 600,
+        fontWeight: 500,
         fontSize: 32,
     },
     snippets: {
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     sectionTitle: {
         marginBottom: 8,
-        fontWeight: 600,
+        fontWeight: 500,
     },
     snippet: {
         marginBottom: 24,
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     snippetTitle: {
         color: "white",
         fontSize: 14,
-        fontWeight: 600,
+        fontWeight: 500,
         width: "90%",
     },
     snippetContent: {
@@ -97,14 +97,14 @@ const useStyles = makeStyles((theme) => ({
     formatTitle: {
         fontSize: 18,
         marginBottom: 8,
-        fontWeight: 600,
+        fontWeight: 500,
     },
     formatItemHeader: {
         display: "flex",
     },
     formatItemName: {
         fontSize: 16,
-        fontWeight: 600,
+        fontWeight: 500,
         marginTop: 8,
         marginBottom: 4,
         fontFamily: "Courier Prime",
@@ -114,7 +114,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         fontSize: 12,
         padding: "4px 12px 0px 12px",
-        fontWeight: 600,
+        fontWeight: 500,
         marginTop: 8,
         marginBottom: 4,
         fontFamily: "Courier Prime",
@@ -126,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         fontSize: 12,
         padding: "4px 12px 0px 12px",
-        fontWeight: 600,
+        fontWeight: 500,
         marginTop: 8,
         marginBottom: 4,
         fontFamily: "Courier Prime",

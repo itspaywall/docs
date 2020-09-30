@@ -1,8 +1,23 @@
-import React from "react";
-import { AppBar, Button, Toolbar, makeStyles } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import {
+    AppBar,
+    Button,
+    Toolbar,
+    makeStyles,
+    Typography,
+    Menu,
+    MenuItem,
+    Box,
+    Grid,
+} from "@material-ui/core";
+import { withRouter, useHistory } from "react-router-dom";
 import clsx from "clsx";
-import Box from "@material-ui/core/Box";
+
+import AccountsIcon from "@material-ui/icons/AccountCircle";
+import TransactionsIcon from "@material-ui/icons/MonetizationOn";
+import SubscriptionsIcon from "@material-ui/icons/Autorenew";
+import InvoicesIcon from "@material-ui/icons/Receipt";
+import PlansIcon from "@material-ui/icons/LocalOffer";
 
 const useStyles = makeStyles((theme) => ({
     logoButton: {
@@ -30,6 +45,35 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 16,
         borderRadius: 0,
     },
+    menuItem: {
+        display: "inline-block",
+        width: 450,
+        margin: 0,
+        padding: 16,
+    },
+    guideMenu: {
+        width: 900,
+        marginRight: 16,
+        marginLeft: 16,
+        marginTop: 8,
+        marginBottom: 8,
+    },
+    itemTitle: {
+        fontSize: 14,
+    },
+    itemSubtitle: {
+        display: "block",
+        fontSize: 14,
+        whiteSpace: "normal",
+    },
+    outer: {
+        display: "flex",
+    },
+    inner: {
+        width: "90%",
+        margin: 0,
+        marginLeft: 12,
+    },
 }));
 
 const links = [
@@ -38,18 +82,97 @@ const links = [
         title: "API REFERENCE",
         url: "/api",
     },
+];
+
+const guides = [
     {
-        id: "guides",
-        title: "GUIDES",
-        url: "/guides",
+        title: "ACCOUNTS",
+        icon: <AccountsIcon />,
+        description:
+            "Accounts represent your customer. The accounts dashboard is core to managing your customers. ",
+        link: `/guides/accounts`,
+    },
+    {
+        title: "SUBSCRIPTIONS",
+        icon: <SubscriptionsIcon />,
+        description:
+            "Subscriptions are created when your customers subscribe to one of your plans.",
+        link: `/guides/subscriptions`,
+    },
+    {
+        title: "TRANSACTIONS",
+        icon: <TransactionsIcon />,
+        description:
+            "Transactions are created when a credit, debit or cash payment is made by your customer.",
+        link: `/guides/transactions`,
+    },
+    {
+        title: "PLANS",
+        icon: <PlansIcon />,
+        description:
+            "A plan is a blueprint for a subscription. It tells Hubble how often and how much to charge your subscribers. ",
+        link: `/guides/plans`,
+    },
+    {
+        title: "INVOICES",
+        icon: <InvoicesIcon />,
+        description:
+            "All billing events create an invoice automatically. The invoice relates a subscription with a transaction.",
+        external: true,
+        link: `/guides/invoices`,
     },
 ];
 
 function MainToolbar(props) {
     const classes = useStyles();
     const history = useHistory();
+    const [guideMenuAnchor, setGuideMenuAnchor] = useState(null);
     const handleLink = (url) => () => history.push(url);
     const handleExternalLink = (url) => () => (window.location = url);
+
+    const handleGuideMenuClose = () => {
+        setGuideMenuAnchor(null);
+    };
+
+    const handleGuideMenuClick = (url) => () => {
+        history.push(url);
+        handleGuideMenuClose();
+    };
+
+    const renderMenu = () => (
+        <Menu
+            anchorEl={guideMenuAnchor}
+            open={guideMenuAnchor !== null}
+            onClose={handleGuideMenuClose}
+            className={classes.menu}
+        >
+            <Grid container={true} className={classes.guideMenu}>
+                {guides.map((guide) => (
+                    <Grid item={true} xs={6}>
+                        <MenuItem
+                            onClick={handleGuideMenuClick(guide.link)}
+                            className={classes.menuItem}
+                        >
+                            <div className={classes.outer}>
+                                {guide.icon}
+                                <div className={classes.inner}>
+                                    <Typography className={classes.itemTitle}>
+                                        {guide.title}
+                                    </Typography>
+                                    <Typography
+                                        className={classes.itemSubtitle}
+                                        paragraph={true}
+                                    >
+                                        {guide.description}
+                                    </Typography>
+                                </div>
+                            </div>
+                        </MenuItem>
+                    </Grid>
+                ))}
+            </Grid>
+        </Menu>
+    );
 
     return (
         <AppBar position="fixed" className={clsx(classes.appBar)}>
@@ -58,7 +181,7 @@ function MainToolbar(props) {
                     <Button
                         className={classes.logoButton}
                         onClick={handleExternalLink(
-                            `${process.env.REACT_APP_WEBSITE_URL}/index`
+                            `${process.env.REACT_APP_WEBSITE_URL} / index`
                         )}
                     >
                         <img
@@ -76,11 +199,17 @@ function MainToolbar(props) {
                             {item.title}
                         </Button>
                     ))}
+                    <Button
+                        onClick={(event) => setGuideMenuAnchor(event.target)}
+                        className={classes.button}
+                    >
+                        GUIDES
+                    </Button>
                 </Box>
                 <Button
                     className={classes.action}
                     onClick={handleExternalLink(
-                        `${process.env.REACT_APP_WEBSITE_URL}/login`
+                        `${process.env.REACT_APP_WEBSITE_URL} / login`
                     )}
                 >
                     LOGIN
@@ -90,14 +219,15 @@ function MainToolbar(props) {
                     color="primary"
                     variant="contained"
                     onClick={handleExternalLink(
-                        `${process.env.REACT_APP_WEBSITE_URL}/register`
+                        `${process.env.REACT_APP_WEBSITE_URL} / register`
                     )}
                 >
                     TRY FOR FREE
                 </Button>
             </Toolbar>
+            {renderMenu()}
         </AppBar>
     );
 }
 
-export default MainToolbar;
+export default withRouter(MainToolbar);
